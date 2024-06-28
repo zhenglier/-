@@ -40,7 +40,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-
         // SS验证
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
