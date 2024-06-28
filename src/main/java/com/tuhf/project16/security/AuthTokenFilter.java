@@ -49,7 +49,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                 username,
                                 null,
                                 authorities);
-                // TODO:该过程不应该访问数据库
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
