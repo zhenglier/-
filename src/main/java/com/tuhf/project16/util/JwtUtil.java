@@ -31,6 +31,7 @@ public class JwtUtil {
 
         JWT jwt = new JWT();
         jwt.setPayload("username", userDetails.getUsername());
+        jwt.setPayload("role", userDetails.getAuthorities().iterator().next().getAuthority());
         /* expiration now implemented by redis cache
         jwt.setIssuedAt(now);
         jwt.setExpiresAt(new Date(now.getTime() + JWT_EXPIRE_TIME_MS));
