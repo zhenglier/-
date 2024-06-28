@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: project16
+  datasource:
+    password: javaweb
+    url: jdbc:mysql://javaweb.milkycrow.com:3306/jw_test
+    username: jw
