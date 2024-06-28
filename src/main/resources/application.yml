@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: project16
+  datasource:
+    password: javaweb
+    url: jdbc:mysql://javaweb.milkycrow.com:3306/jw_test?useSSL=false
+    username: jw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: javaweb.milkycrow.com
+      port: 6379
+      username: jw
+      password: javaweb
+      database: 0
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
