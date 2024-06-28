@@ -8,6 +8,8 @@ import com.tuhf.project16.payload.response.MessageResponse;
 import com.tuhf.project16.service.ILoginUserService;
 import com.tuhf.project16.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,13 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    ILoginUserService loginUserService;
+    private ILoginUserService loginUserService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -48,7 +53,7 @@ public class AuthController {
         // 如果通过了ss验证，发放token
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String role = userDetails.getAuthorities().iterator().next().getAuthority();
-        String token = JwtUtil.create(authentication);
+        String token = jwtUtil.create(authentication);
 
         return ResponseEntity.ok(
                 new LoginResponse(

@@ -25,6 +25,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
@@ -32,7 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String token = request.getHeader("Authorization");
-            if (token != null && JwtUtil.verify(token)) {
+            if (token != null && jwtUtil.verify(token)) {
                 JWT jwt = JWTUtil.parseToken(token);
                 String username = (String) jwt.getPayload("username");
 
