@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tuhf</groupId>
-    <artifactId>project16</artifactId>
+    <artifactId>security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>project16</name>
     <description>project16</description>
