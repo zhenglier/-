@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhf.project16.mapper.PolicyMapper">
+    <resultMap id="policyResult" type="com.tuhf.project16.model.Policy">
+        <id property="id" column="id"/>
+        <result property="issuerId" column="issuer_id"/>
+        <result property="level" column="level"/>
+        <result property="serial" column="serial"/>
+        <result property="title" column="title"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="clicks" column="clicks"/>
+        <result property="content" column="content"/>
+        <result property="fileList" column="file_list"/>
+        <association property="issuerName" select="getIssuerName" column="issuer_id"/>
+        <collection property="tags" javaType="Set" select="getTags" column="id"/>
+    </resultMap>
+
+    <insert id="addPolicy" parameterType="com.tuhf.project16.model.Policy">
+        insert into policy(
+            issuer_id, issuer_name, level, serial, title, create_at, clicks, content, file_list
+        ) value (
+            #{issuerId},
+            (select name from entity_government),
+            #{level},
+            #{serial},
+            #{title},
+            #{createdAt},
+            #{clicks},
+            #{content},
+            #{fileList}
+        )
+    </insert>
+
+    <select id="getPolicy" parameterType="long" resultMap="policyResult">
+        select p.id, p.issuer_id, p.level, p.serial, p.title, p.create_at, p.clicks, p.content, p.content, p.file_list from policy p
+    </select>
+
+    <select id="getTags" parameterType="long">
+        select name from policy_tags
+        where policy_id = #{id}
+    </select>
+
+    <select id="getIssuerName" parameterType="Long">
+        select name from entity_government
+        where id = #{issuer_id}
+    </select>
+
+
+</mapper>
