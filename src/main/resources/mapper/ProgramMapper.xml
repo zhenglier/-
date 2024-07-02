@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhf.project16.mapper.ProgramMapper">
+
+
+<!--    ProgramTemplate-->
+    <insert id="addProgramTemplate" parameterType="com.tuhf.project16.model.ProgramTemplate">
+        INSERT INTO program_template(
+             program_template_name,
+             origin_government_id,
+             type,
+             data
+        )
+        VALUES (
+            #{programTemplateName},
+            #{originGovernmentId},
+            #{type},
+            #{data}
+        );
+    </insert>
+
+    <select id="getProgramTemplateById" parameterType="long">
+        select * from program_template
+        where id=#{id} LIMIT 1;
+    </select>
+
+    <select id="getProgramTemplatesByType" parameterType="int">
+        select * from program_template
+        where type=#{type};
+    </select>
+
+    <select id="getProgramTemplatesByGovernmentId" parameterType="Long">
+        select * from program_template
+        where origin_government_id=#{governmentId};
+    </select>
+
+<!--    ProgramApplication-->
+    <insert id="addProgramApplication" parameterType="com.tuhf.project16.model.ProgramApplication">
+        insert into program_application(
+            program_application_name,
+            source_id,
+            source_type,
+            destination_id,
+            destination_type,
+            program_template_id,
+            data
+        )
+        values (
+            #{programApplicationName},
+            #{sourceId},
+            #{sourceType},
+            #{destinationId},
+            #{destinationType},
+            #{programTemplateId},
+            #{data}
+        );
+    </insert>
+
+    <select id="getProgramApplicationById" parameterType="Long">
+        select * from program_application
+        where id=#{id} LIMIT 1;
+    </select>
+
+    <select id="getProgramApplications">
+        select * from program_application
+        where (source_id=#{sourceId} or #{sourceId}=-1) and
+              (source_type=#{sourceType} or #{sourceType}=-1) and
+              (destination_id=#{destinationId} or #{destinationId}=-1) and
+              (destination_type=#{destinationType} or #{destinationType}=-1);
+    </select>
+
+</mapper>
