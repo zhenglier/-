@@ -1,10 +1,14 @@
 package com.tuhf.project16.controller;
 
 import com.tuhf.project16.model.Policy;
+import com.tuhf.project16.payload.response.PolicyBriefResponse;
 import com.tuhf.project16.service.IPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -20,7 +24,32 @@ public class PolicyController {
     }
 
     @GetMapping("/policy/{id}")
-    public ResponseEntity<?> getPolicy(@PathVariable long id) {
+    public ResponseEntity<?> getPolicyById(@PathVariable long id) {
+        policyService.increaseClicks(id);
         return ResponseEntity.ok(policyService.getPolicyById(id));
+    }
+
+    @RequestMapping(value = "/policy", method = RequestMethod.GET, params = {"tag"})
+    public ResponseEntity<?> getPoliciesByTags(@RequestParam Map<String, String> params) {
+        Collection<Policy> policies = policyService.getPoliciesByTags(params.values());
+        return ResponseEntity.ok(policies);
+    }
+
+    @GetMapping("/policy")
+    public ResponseEntity<?> getAllPolicies() {
+            Collection<Policy> policies = policyService.getAllPolicies();
+            return ResponseEntity.ok(policies);
+    }
+
+    @RequestMapping(value = "/policy/brief", method = RequestMethod.GET, params = {"tag"})
+    public ResponseEntity<?> getBriefsByTags(@RequestParam Map<String, String> params) {
+        PolicyBriefResponse policies = policyService.getBriefByTags(params.values());
+        return ResponseEntity.ok(policies);
+    }
+
+    @GetMapping("/policy/brief")
+    public ResponseEntity<?> getAllBriefs() {
+        Collection<PolicyBriefResponse> policies = policyService.getAllBriefs();
+        return ResponseEntity.ok(policies);
     }
 }
