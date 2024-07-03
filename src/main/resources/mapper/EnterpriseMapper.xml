@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.tuhf.project16.mapper.EnterpriseMapper">
     <resultMap id="enterpriseResult" type="com.tuhf.project16.model.Enterprise">
         <association property="carrierName" select="getCarrierName" column="carrier_id"/>

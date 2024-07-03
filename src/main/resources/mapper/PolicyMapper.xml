@@ -71,6 +71,11 @@
         select id, issuer_name, level, title, create_at, clicks from policy
     </select>
 
+    <select id="getBriefsByPage" resultMap="policyBriefResult">
+        select id, issuer_name, level, title, create_at, clicks from policy
+        limit #{offset}, #{limit}
+    </select>
+
     <select id="getTags" parameterType="long" resultType="string">
         select name from policy_tags
         where policy_id = #{policyId}

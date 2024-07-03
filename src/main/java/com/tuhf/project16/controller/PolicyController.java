@@ -32,24 +32,30 @@ public class PolicyController {
     @RequestMapping(value = "/policy", method = RequestMethod.GET, params = {"tag"})
     public ResponseEntity<?> getPoliciesByTags(@RequestParam Map<String, String> params) {
         Collection<Policy> policies = policyService.getPoliciesByTags(params.values());
-        return ResponseEntity.ok(policies);
+        return ResponseEntity.ok().body(policies);
     }
 
     @GetMapping("/policy")
     public ResponseEntity<?> getAllPolicies() {
             Collection<Policy> policies = policyService.getAllPolicies();
-            return ResponseEntity.ok(policies);
+            return ResponseEntity.ok().body(policies);
     }
 
     @RequestMapping(value = "/policy/brief", method = RequestMethod.GET, params = {"tag"})
     public ResponseEntity<?> getBriefsByTags(@RequestParam Map<String, String> params) {
         PolicyBriefResponse policies = policyService.getBriefByTags(params.values());
-        return ResponseEntity.ok(policies);
+        return ResponseEntity.ok().body(policies);
+    }
+
+    @RequestMapping(value = "/policy/brief", method = RequestMethod.GET, params = {"page"})
+    public ResponseEntity<?> getBriefsByPage(@RequestParam Map<String, String> params) {
+        Collection<PolicyBriefResponse> policies = policyService.getBriefsByPage(Integer.parseInt(params.get("page")));
+        return ResponseEntity.ok().body(policies);
     }
 
     @GetMapping("/policy/brief")
     public ResponseEntity<?> getAllBriefs() {
         Collection<PolicyBriefResponse> policies = policyService.getAllBriefs();
-        return ResponseEntity.ok(policies);
+        return ResponseEntity.ok().body(policies);
     }
 }

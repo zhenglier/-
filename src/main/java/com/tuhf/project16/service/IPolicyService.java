@@ -14,6 +14,7 @@ public interface IPolicyService {
 
     PolicyBriefResponse getBriefByTags(Collection<String> tags);
     Collection<PolicyBriefResponse> getAllBriefs();
+    Collection<PolicyBriefResponse> getBriefsByPage(int page);
 
     int increaseClicks(long id);
 }
