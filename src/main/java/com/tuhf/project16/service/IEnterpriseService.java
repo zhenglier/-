@@ -1,13 +1,18 @@
 package com.tuhf.project16.service;
 
 import com.tuhf.project16.model.Enterprise;
+import com.tuhf.project16.payload.response.EnterpriseBriefResponse;
+
+import java.util.Collection;
 
 public interface IEnterpriseService {
-    public int addEnterprise(Enterprise enterprise);
+    int addEnterprise(Enterprise enterprise);
 
-    public int updateEnterprise(Enterprise enterprise);
+    int updateEnterprise(Enterprise enterprise);
 
-    public Enterprise getEnterpriseById(long id);
+    Enterprise getEnterpriseById(long id);
 
-    //TODO brief
+    EnterpriseBriefResponse getBriefById(long id);
+
+    Collection<EnterpriseBriefResponse > getAllBriefs();
 }

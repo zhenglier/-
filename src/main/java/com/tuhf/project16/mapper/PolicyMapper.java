@@ -7,15 +7,15 @@ import java.util.Collection;
 import java.util.Set;
 
 public interface PolicyMapper {
-    public int addPolicyWithoutTags(Policy policy);
-    public int setTags(Long policyId, Set<String> tags);
+    int addPolicyWithoutTags(Policy policy);
+    int setTags(Long policyId, Set<String> tags);
 
-    public Collection<Policy> getPolicies();
-    public Collection<Policy> getPoliciesByTags(Collection<String> tags);
-    public Policy getPolicyById(long id);
+    Collection<Policy> getPolicies();
+    Collection<Policy> getPoliciesByTags(Collection<String> tags);
+    Policy getPolicyById(long id);
 
-    public PolicyBriefResponse getBriefByTags(Collection<String> tags);
-    public Collection<PolicyBriefResponse> getAllBriefs();
+    PolicyBriefResponse getBriefByTags(Collection<String> tags);
+    Collection<PolicyBriefResponse> getAllBriefs();
 
-    public int increaseClicks(long id);
+    int increaseClicks(long id);
 }

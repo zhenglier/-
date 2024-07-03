@@ -6,7 +6,10 @@
     <resultMap id="enterpriseResult" type="com.tuhf.project16.model.Enterprise">
         <association property="carrierName" select="getCarrierName" column="carrier_id"/>
     </resultMap>
-    
+    <resultMap id="enterpriseBriefResult" type="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
+        <association property="carrierName" select="getCarrierName" column="carrier_id"/>
+    </resultMap>
+
     <insert id="addEnterprise" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into entity_enterprise(
             credit_code, name, registerd_capital, type, industry, address, register_at, operator_name,
@@ -74,5 +77,14 @@
     <select id="getCarrierName" resultType="string">
         select name carrier_name from entity_carrier
         where id = #{carrierId};
+    </select>
+
+    <select id="getBriefById" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
+        select id, name, carrier_id, address, industry, status from entity_enterprise
+        where id = #{id}
+    </select>
+
+    <select id="getAllBriefs" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
+        select id, name, carrier_id, address, industry, status from entity_enterprise
     </select>
 </mapper>

@@ -32,9 +32,20 @@ public class EnterpriseController {
         enterprise = enterpriseService.getEnterpriseById(enterprise.getId());
         return ResponseEntity.ok().body(enterprise);
     }
+
     @GetMapping("/etp/{id}")
     public ResponseEntity<?> getEnterprise(@PathVariable long id) {
         Enterprise enterprise = enterpriseService.getEnterpriseById(id);
         return ResponseEntity.ok().body(enterprise);
+    }
+
+    @GetMapping("/etp/brief")
+    public ResponseEntity<?> getAllBriefs() {
+        return ResponseEntity.ok().body(enterpriseService.getAllBriefs());
+    }
+
+    @GetMapping("/etp/brief/{id}")
+    public ResponseEntity<?> getBriefById(@PathVariable long id) {
+        return ResponseEntity.ok().body(enterpriseService.getBriefById(id));
     }
 }
