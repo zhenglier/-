@@ -1,4 +1,4 @@
-package com.tuhf.project16.payload.request;
+package com.tuhf.project16.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MoveRequest {
+public class MoveApplication {
+    private Long id;
+
     private Long enterpriseId;
 
     private Long carrierId;
@@ -17,4 +19,6 @@ public class MoveRequest {
     private Date moveAt;
 
     private String comment;
+
+    private String status;
 }

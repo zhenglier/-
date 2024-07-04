@@ -13,6 +13,8 @@ public interface LoginUserMapper {
 
     LoginUser getLoginUserByUsername(String username);
 
+    Long getEntityIdById(Long id);
+
     /* Update */
 
     int updatePasswordById(Long id, String password);
