@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class JwtUtil {
     private static final byte[] JWT_KEY = "master1145141919810".getBytes();
 //    private static final Long JWT_EXPIRE_TIME_MS = (long) (20 * 60 * 1000);
-    private static final Long JWT_EXPIRE_TIME_MS = (long) (1 * 1000);
+    private static final Long JWT_EXPIRE_TIME_MS = (long) (1000 * 1000);
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;
@@ -50,6 +50,11 @@ public class JwtUtil {
     }
 
     public boolean verify(String token) {
+        System.out.println(redisTemplate.opsForValue().get(token));
         return redisTemplate.opsForValue().get(token) != null;
+    }
+
+    public void erase(String token) {
+        redisTemplate.delete(token);
     }
 }
