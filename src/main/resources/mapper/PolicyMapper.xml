@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhf.project16.mapper.PolicyMapper">
+    <resultMap id="policyResult" type="com.tuhf.project16.model.Policy">
+        <id property="id" column="id"/>
+        <collection property="tags" ofType="string" select="getTags" javaType="java.util.HashSet" column="id"/>
+    </resultMap>
+
+    <resultMap id="policyBriefResult" type="com.tuhf.project16.payload.response.PolicyBriefResponse">
+        <id property="id" column="id"/>
+        <collection property="tags" ofType="string" select="getTags" javaType="java.util.HashSet" column="id"/>
+    </resultMap>
+
+    <insert id="addPolicyWithoutTags" parameterType="com.tuhf.project16.model.Policy" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into policy(
+            issuer_id, issuer_name, level, serial, title, create_at, clicks, content, file_list
+        ) value (
+            #{issuerId},
+            (select name from entity_government where id = #{issuerId}),
+            #{level},
+            #{serial},
+            #{title},
+            #{createAt},
+            #{clicks},
+            #{content},
+            #{fileList}
+        )
+    </insert>
+
+    <insert id="setTags">
+        insert into policy_tags(policy_id, name) values
+        <foreach collection="tags" item="tag" separator=",">
+            (#{policyId}, #{tag})
+        </foreach>
+    </insert>
+
+    <select id="getPolicyById" parameterType="long" resultMap="policyResult">
+        select * from policy
+        where id = #{id}
+    </select>
+
+    <select id="getPolicies" resultMap="policyResult">
+        select * from policy
+    </select>
+
+    <select id="getPoliciesByTags" resultMap="policyResult">
+        select * from policy
+        where id in (
+            select policy_id from policy_tags
+            where
+                <foreach collection="tags" item="tag" separator=" or ">
+                    name = #{tag}
+                </foreach>
+        )
+    </select>
+
+    <select id="getBriefByTags" resultMap="policyBriefResult">
+        select id, issuer_name, level, title, create_at, clicks from policy
+        where id in (
+            select policy_id from policy_tags
+            where
+                 <foreach collection="tags" item="tag" separator=" or ">
+                     name = #{tag}
+                 </foreach>
+        )
+    </select>
+
+    <select id="getAllBriefs" resultMap="policyBriefResult">
+        select id, issuer_name, level, title, create_at, clicks from policy
+    </select>
+
+    <select id="getBriefsByPage" resultMap="policyBriefResult">
+        select id, issuer_name, level, title, create_at, clicks from policy
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="getTags" parameterType="long" resultType="string">
+        select name from policy_tags
+        where policy_id = #{policyId}
+    </select>
+
+    <select id="getIssuerName" parameterType="long" resultType="string">
+        select name from entity_government
+        where id = #{issuer_id}
+    </select>
+
+    <update id="increaseClicks" parameterType="long">
+        update policy
+        set clicks = clicks + 1
+        where id = #{id}
+    </update>
+
+</mapper>
