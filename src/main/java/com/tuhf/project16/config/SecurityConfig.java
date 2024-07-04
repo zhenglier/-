@@ -82,13 +82,12 @@ public class SecurityConfig { // extends WebSecurityConfigurerAdapter {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/user/**").permitAll()
-
-                                .anyRequest().authenticated()
-                );
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//                .authorizeHttpRequests(auth ->
+//                        auth.requestMatchers("/auth/**").permitAll()
+//                                .requestMatchers("/user/**").permitAll()
+//                                .anyRequest().authenticated()
+//                );
 
         http.authenticationProvider(authenticationProvider());
 

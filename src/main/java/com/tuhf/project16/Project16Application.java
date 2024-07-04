@@ -1,7 +1,6 @@
 package com.tuhf.project16;
 
-import com.tuhf.project16.mapper.ProgramMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;

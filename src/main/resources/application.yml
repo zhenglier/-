@@ -7,6 +7,7 @@ spring:
     username: jw
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
+
     redis:
       host: javaweb.milkycrow.com
       port: 6379
