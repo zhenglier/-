@@ -1,6 +1,8 @@
 package com.tuhf.project16;
 
+import com.tuhf.project16.mapper.ProgramMapper;
 import com.tuhf.project16.model.LoginUser;
+import com.tuhf.project16.model.ProgramTemplate;
 import com.tuhf.project16.service.ILoginUserService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -15,6 +17,24 @@ class Project16ApplicationTests {
     private static final Logger log = LoggerFactory.getLogger(Project16ApplicationTests.class);
     @Autowired
     ILoginUserService loginUserService;
+    @Autowired
+    ProgramMapper programMapper;
+
+    @Test
+    void testProgramMapper(){
+
+        System.out.println(programMapper.getProgramApplications(-1L,-1,-1L,-1));
+
+
+//        programMapper.addProgramTemplate(new ProgramTemplate(
+//                1L,
+//                "testTemplate",
+//                1L,
+//                2,
+//                "114514"
+//        ));
+    }
+
 
     @Test
     void contextLoads() {
@@ -37,4 +57,5 @@ class Project16ApplicationTests {
         loginUserService.deleteLoginUserById(id);
         assertTrue(loginUserService.checkUsernameUnique("admin"));
     }
+
 }
