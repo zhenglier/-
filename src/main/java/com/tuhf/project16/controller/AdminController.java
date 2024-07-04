@@ -6,6 +6,7 @@ import com.tuhf.project16.payload.response.MessageResponse;
 import com.tuhf.project16.service.ILoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin")//管理员账号
 public class AdminController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class AdminController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         if (!loginUserService.checkUsernameUnique(registerRequest.username())) {

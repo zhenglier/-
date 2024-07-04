@@ -50,6 +50,11 @@ public class JwtUtil {
     }
 
     public boolean verify(String token) {
+        System.out.println(redisTemplate.opsForValue().get(token));
         return redisTemplate.opsForValue().get(token) != null;
+    }
+
+    public void erase(String token) {
+        redisTemplate.delete(token);
     }
 }

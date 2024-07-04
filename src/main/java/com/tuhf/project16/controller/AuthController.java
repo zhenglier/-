@@ -2,8 +2,10 @@ package com.tuhf.project16.controller;
 
 import com.tuhf.project16.model.LoginUser;
 import com.tuhf.project16.payload.request.LoginRequest;
+import com.tuhf.project16.payload.request.LogoutRequest;
 import com.tuhf.project16.payload.request.RegisterRequest;
 import com.tuhf.project16.payload.response.LoginResponse;
+import com.tuhf.project16.payload.response.LogoutResponse;
 import com.tuhf.project16.payload.response.MessageResponse;
 import com.tuhf.project16.service.ILoginUserService;
 import com.tuhf.project16.util.JwtUtil;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,6 +40,27 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @GetMapping("/check")
+    public ResponseEntity<?> check(@RequestParam String token) {
+//        System.out.println(token);
+        if(jwtUtil.verify(token)){
+            return ResponseEntity.ok("true");
+        }else{
+            return ResponseEntity.ok("false");
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody LogoutRequest token) {
+//        System.out.println(token);
+        if(jwtUtil.verify(token.getToken())){
+            jwtUtil.erase(token.getToken());
+            return ResponseEntity.ok(new LogoutResponse(20000,"Logout successfully!"));
+        }else{
+            return ResponseEntity.ok(new LogoutResponse(20000,"Has already logged out!"));
+        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
