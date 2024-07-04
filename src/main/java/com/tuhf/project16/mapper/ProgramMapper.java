@@ -1,6 +1,7 @@
 package com.tuhf.project16.mapper;
 
 import com.tuhf.project16.model.ProgramApplication;
+import com.tuhf.project16.model.ProgramReview;
 import com.tuhf.project16.model.ProgramTemplate;
 
 import java.util.ArrayList;
@@ -29,5 +30,8 @@ public interface ProgramMapper {
      */
     Collection<ProgramApplication> getProgramApplications(long sourceId, long sourceType,
                                                           long destinationId, long destinationType);
+    ProgramReview getProgramReviewById(Long id);
+
+    void addProgramReview(ProgramReview programReview);
 
 }

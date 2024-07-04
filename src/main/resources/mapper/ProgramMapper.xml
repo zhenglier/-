@@ -71,4 +71,20 @@
               (destination_type=#{destinationType} or #{destinationType}=-1);
     </select>
 
+
+    <insert id="addProgramReview">
+        insert Into program_review(
+            source_type, source_id, data
+        ) values (
+            #{sourceType},
+            #{sourceId},
+            #{data}
+        )
+    </insert>
+
+    <select id="getProgramReviewById">
+        select * from program_review
+        where id=#{id} LIMIT 1;
+    </select>
+
 </mapper>
