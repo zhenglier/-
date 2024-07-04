@@ -28,6 +28,21 @@ public class LoginUserServiceImpl implements ILoginUserService {
     }
 
     @Override
+    public Long getIdByUsername(String username) {
+        return getLoginUserByUsername(username).getId();
+    }
+
+    @Override
+    public Long getEntityIdByUsername(String username) {
+        return loginUserMapper.getEntityIdById(getIdByUsername(username));
+    }
+
+    @Override
+    public Long getEntityIdById(Long id) {
+        return loginUserMapper.getEntityIdById(id);
+    }
+
+    @Override
     public boolean checkUsernameUnique(String username) {
         return getLoginUserByUsername(username) == null;
     }

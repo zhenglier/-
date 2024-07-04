@@ -32,6 +32,11 @@
         where username = #{username}
     </select>
 
+    <select id="getEntityIdById" parameterType="long" resultType="long">
+        select entity_id from login_entity
+        where login_user_id = #{LoginUserId}
+    </select>
+
     <update id="updatePasswordById">
         update login_user
         set password = #{password}

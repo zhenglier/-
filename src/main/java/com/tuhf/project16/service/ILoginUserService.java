@@ -15,6 +15,12 @@ public interface ILoginUserService {
 
     boolean checkUsernameUnique(String username);
 
+    Long getIdByUsername(String username);
+
+    Long getEntityIdByUsername(String username);
+
+    Long getEntityIdById(Long id);
+
     /* Update */
 
     int updatePasswordById(Long id, String password);
