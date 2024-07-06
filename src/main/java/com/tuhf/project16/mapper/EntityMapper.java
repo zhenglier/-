@@ -1,11 +1,11 @@
-package com.tuhf.project16.service;
+package com.tuhf.project16.mapper;
 
 import com.tuhf.project16.model.Enterprise;
 import com.tuhf.project16.payload.response.EnterpriseBriefResponse;
 
 import java.util.Collection;
 
-public interface IEnterpriseService {
+public interface EntityMapper {
     int addEnterprise(Enterprise enterprise);
 
     int updateEnterprise(Enterprise enterprise);
@@ -14,5 +14,8 @@ public interface IEnterpriseService {
 
     EnterpriseBriefResponse getBriefById(long id);
 
-    Collection<EnterpriseBriefResponse > getAllBriefs();
+    Collection<EnterpriseBriefResponse> getAllBriefs();
+
+
+    Long getParentIdForCarrier(long carrierId);
 }

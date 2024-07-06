@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhf.project16.mapper.PerformanceMapper">
+    <insert id="addTemplate">
+        insert into pf_template(
+            name, data
+        ) value (
+            #{name},
+            #{data}
+        )
+    </insert>
+
+    <select id="getTemplateById" resultType="com.tuhf.project16.model.PerfTemplate">
+        select * from pf_template
+        where id = #{id}
+    </select>
+
+    <select id="getAllTemplates" resultType="com.tuhf.project16.model.PerfTemplate">
+        select * from pf_template
+    </select>
+
+    <insert id="addItem">
+        insert into pf_item(
+            template_id, name, type, begin_date, end_date, year, description, issuer_id
+        ) value (
+            #{templateId},
+            #{name},
+            #{type},
+            #{beginDate},
+            #{endDate},
+            #{year},
+            #{description},
+            #{issuerId}
+        )
+    </insert>
+
+    <select id="getItemById" resultType="com.tuhf.project16.model.PerfItem">
+        select * from pf_item
+        where id = #{id}
+    </select>
+
+    <select id="getItemsByIssuerId" resultType="com.tuhf.project16.model.PerfApplication">
+        select * from pf_item
+        where issuer_id = #{issuerId}
+    </select>
+
+    <insert id="addApplication">
+        insert into pf_application(
+            item_id, carrier_id, data, status
+        ) value (
+            #{itemId},
+            #{carrierId},
+            #{data},
+            #{status}
+        )
+    </insert>
+
+    <select id="getApplicationByItemId" resultType="com.tuhf.project16.model.PerfApplication">
+        select * from pf_application
+        where item_id = #{itemId}
+    </select>
+
+    <select id="getApplicationByCarrierId" resultType="com.tuhf.project16.model.PerfApplication">
+        select * from pf_application
+        where carrier_id = #{carrierId}
+    </select>
+
+    <insert id="addReview">
+        insert into pf_review(
+            app_id, score, comment
+        ) value (
+            #{appId},
+            #{score},
+            #{comment}
+        )
+    </insert>
+
+    <select id="getReviewByAppId" resultType="com.tuhf.project16.model.PerfReview">
+        select * from pf_review
+        where app_id = #{appId}
+    </select>
+
+    <select id="getReviewsForGov" resultType="com.tuhf.project16.model.PerfReview">
+        select * from pf_review
+        where app_id in (
+            select id from pf_application
+            where carrier_id in (
+                select id from entity_carrier
+                where parent_id = #{govId}
+            )
+        )
+    </select>
+
+    <select id="getReviewsForCarrier" resultType="com.tuhf.project16.model.PerfReview">
+        select * from pf_review
+        where app_id in (
+            select id from pf_application
+            where carrier_id = #{carrierId}
+        )
+    </select>
+</mapper>

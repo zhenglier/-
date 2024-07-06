@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 登录和权限管理部分的自定义用户对象
  * @author 30805
  */
 @Data

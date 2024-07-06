@@ -3,7 +3,7 @@ package com.tuhf.project16.controller;
 import com.tuhf.project16.model.Enterprise;
 import com.tuhf.project16.model.MoveApplication;
 import com.tuhf.project16.payload.response.MessageResponse;
-import com.tuhf.project16.service.IEnterpriseService;
+import com.tuhf.project16.service.IEntityService;
 import com.tuhf.project16.service.IMoveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/etp")
+@CrossOrigin("*")
 public class EnterpriseController {
 
     @Autowired
-    IEnterpriseService enterpriseService;
+    IEntityService enterpriseService;
 
     @Autowired
     IMoveApplicationService moveApplicationService;

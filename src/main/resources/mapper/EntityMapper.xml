@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.tuhf.project16.mapper.EnterpriseMapper">
+<mapper namespace="com.tuhf.project16.mapper.EntityMapper">
     <resultMap id="enterpriseResult" type="com.tuhf.project16.model.Enterprise">
         <association property="carrierName" select="getCarrierName" column="carrier_id"/>
     </resultMap>
@@ -87,5 +87,10 @@
 
     <select id="getAllBriefs" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
         select id, name, carrier_id, address, industry, status from entity_enterprise
+    </select>
+
+    <select id="getParentIdForCarrier" resultType="long">
+        select ec.parent_id from entity_carrier ec
+        where ec.id = #{carrierId}
     </select>
 </mapper>

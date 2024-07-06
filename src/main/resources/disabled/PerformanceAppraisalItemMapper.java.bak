@@ -1,0 +1,9 @@
+package disabled;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tuhf.project16.model.PerfItem;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface PerformanceAppraisalItemMapper  extends BaseMapper<PerfItem> {
+}

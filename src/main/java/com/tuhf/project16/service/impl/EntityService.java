@@ -1,43 +1,49 @@
 package com.tuhf.project16.service.impl;
 
-import com.tuhf.project16.mapper.EnterpriseMapper;
+import com.tuhf.project16.mapper.EntityMapper;
 import com.tuhf.project16.model.Enterprise;
 import com.tuhf.project16.payload.response.EnterpriseBriefResponse;
-import com.tuhf.project16.service.IEnterpriseService;
+import com.tuhf.project16.service.IEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
-public class EnterpriseService implements IEnterpriseService {
+public class EntityService implements IEntityService {
 
     @Autowired
-    EnterpriseMapper enterpriseMapper;
+    EntityMapper entityMapper;
 
     @Override
     public int addEnterprise(Enterprise enterprise) {
-        return enterpriseMapper.addEnterprise(enterprise);
+        return entityMapper.addEnterprise(enterprise);
     }
 
     @Override
     public int updateEnterprise(Enterprise enterprise) {
-        return enterpriseMapper.updateEnterprise(enterprise);
+        return entityMapper.updateEnterprise(enterprise);
     }
 
     @Override
     public Enterprise getEnterpriseById(long id) {
-        return enterpriseMapper.getEnterpriseById(id);
+        return entityMapper.getEnterpriseById(id);
     }
 
     @Override
     public EnterpriseBriefResponse getBriefById(long id) {
-        return enterpriseMapper.getBriefById(id);
+        return entityMapper.getBriefById(id);
     }
 
     @Override
     public Collection<EnterpriseBriefResponse> getAllBriefs() {
-        return enterpriseMapper.getAllBriefs();
+        return entityMapper.getAllBriefs();
+    }
+
+
+    @Override
+    public Long getParentIdForCarrier(long carrierId) {
+        return entityMapper.getParentIdForCarrier(carrierId);
     }
 
 }
