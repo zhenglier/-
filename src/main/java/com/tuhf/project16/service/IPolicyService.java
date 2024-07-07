@@ -12,7 +12,7 @@ public interface IPolicyService {
     Collection<Policy> getAllPolicies();
     Collection<Policy> getPoliciesByTags(Collection<String> tags);
 
-    PolicyBriefResponse getBriefByTags(Collection<String> tags);
+    Collection<PolicyBriefResponse> getBriefsByTags(Collection<String> tags);
     Collection<PolicyBriefResponse> getAllBriefs();
     Collection<PolicyBriefResponse> getBriefsByPage(int page);
 

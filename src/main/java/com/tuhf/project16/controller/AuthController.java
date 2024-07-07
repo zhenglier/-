@@ -47,11 +47,11 @@ public class AuthController {
      * @return 以字符串表示的状态指示
      */
     @GetMapping("/check")
-    public ResponseEntity<?> check(@RequestParam String token) {
+    public String check(@RequestParam String token) {
         if(jwtUtil.verify(token)){
-            return ResponseEntity.ok("true");
+            return "true";
         }else{
-            return ResponseEntity.ok("false");
+            return "false";
         }
     }
 
@@ -61,12 +61,12 @@ public class AuthController {
      * @return 提示消息
      */
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody LogoutRequest token) {
+    public LogoutResponse logout(@RequestBody LogoutRequest token) {
         if(jwtUtil.verify(token.getToken())){
             jwtUtil.erase(token.getToken());
-            return ResponseEntity.ok(new LogoutResponse(20000,"Logout successfully!"));
+            return new LogoutResponse(20000,"Logout successfully!");
         }else{
-            return ResponseEntity.ok(new LogoutResponse(20000,"Has already logged out!"));
+            return new LogoutResponse(20000,"Has already logged out!");
         }
     }
 
@@ -76,7 +76,7 @@ public class AuthController {
      * @return LoginResponse 对象，包含令牌、用户名、角色、状态码
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         // SS验证
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -91,13 +91,11 @@ public class AuthController {
         String role = userDetails.getAuthorities().iterator().next().getAuthority();
         String token = jwtUtil.create(authentication);
 
-        return ResponseEntity.ok(
-                new LoginResponse(
+        return new LoginResponse(
                         token,
                         userDetails.getUsername(),
                         role,
                         20000
-                )
         );
     }
 
@@ -107,11 +105,10 @@ public class AuthController {
      * @return 消息响应
      */
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+    public MessageResponse register(@RequestBody RegisterRequest registerRequest) {
         // 重名检测
         if (!loginUserService.checkUsernameUnique(registerRequest.username())) {
-            return ResponseEntity.badRequest().body(
-                    new MessageResponse("Username is already taken!"));
+            return new MessageResponse("Username is already taken!");
         }
 
         // 公开的注册功能只能注册企业角色的用户
@@ -124,8 +121,7 @@ public class AuthController {
 
         loginUserService.addLoginUser(loginUser);
 
-        return ResponseEntity.ok().body(
-                new MessageResponse("Successfully registered!"));
+        return new MessageResponse("Successfully registered!");
     }
 
 }

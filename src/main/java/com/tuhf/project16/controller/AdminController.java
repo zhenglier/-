@@ -11,8 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")//管理员账号
-@CrossOrigin("*")
+@RequestMapping("/admin")  //管理员账号
 public class AdminController {
 
     @Autowired

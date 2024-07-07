@@ -8,6 +8,7 @@ import com.tuhf.project16.model.ProgramTemplate;
 import com.tuhf.project16.payload.request.AddProgramApplicationRequest;
 import com.tuhf.project16.payload.request.AddProgramReviewRequest;
 import com.tuhf.project16.payload.request.AddProgramTemplateRequest;
+import com.tuhf.project16.payload.response.MessageResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,15 @@ import org.springframework.web.bind.annotation.*;
  * @author 30805
  */
 @RestController
-@RequestMapping("/api/program")
+@RequestMapping("/program")
 @CrossOrigin("*")
 public class ProgramController {
 
     @Autowired
     ProgramMapper programMapper;
 
-    @PostMapping("template/add")
-    @PreAuthorize("hasAnyAuthority('enterprise','carrier','government')")
+    @PostMapping("/template/add")
+    @PreAuthorize("hasRole('government')")
     public ResponseEntity<?> addProgramTemplate(@RequestBody AddProgramTemplateRequest addProgramTemplateRequest) {
         try {
             programMapper.addProgramTemplate(new ProgramTemplate(addProgramTemplateRequest));
@@ -57,10 +58,10 @@ public class ProgramController {
     }
 
     @PostMapping("application/add")
-    @PreAuthorize("hasAnyAuthority('enterprise','carrier','government')")
-    public ResponseEntity<?> addApplication(@RequestBody AddProgramApplicationRequest addProgramApplicationRequest){
+    @PreAuthorize("hasAnyRole('enterprise', 'carrier')")
+    public MessageResponse addApplication(@RequestBody AddProgramApplicationRequest addProgramApplicationRequest){
         programMapper.addProgramApplication(new ProgramApplication(addProgramApplicationRequest));
-        return ResponseEntity.ok("Add program application successful!");
+        return new MessageResponse("Program application successfully added!");
     }
 
     @PostMapping("review/add")

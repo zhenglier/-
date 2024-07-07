@@ -1,10 +1,9 @@
 package com.tuhf.project16.controller;
 
 import com.tuhf.project16.service.ILoginUserService;
-import com.tuhf.project16.service.IMoveApplicationService;
+import com.tuhf.project16.service.ITransApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarrierController {
 
     @Autowired
-    IMoveApplicationService moveApplicationService;
+    ITransApplicationService moveApplicationService;
 
     @Autowired
     ILoginUserService loginUserService;

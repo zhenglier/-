@@ -1,5 +1,6 @@
 package com.tuhf.project16.model;
 
+import com.tuhf.project16.payload.request.AddPolicyRequest;
 import lombok.*;
 
 import java.util.Date;
@@ -41,5 +42,16 @@ public class Policy {
 
     /* 附件列表 */
     private String fileList;
+
+    public Policy(AddPolicyRequest request) {
+        tags = request.tags();
+        level = request.level();
+        serial = request.serial();
+        title = request.title();
+        createAt = new Date();
+        clicks = 0;
+        content = request.content();
+        fileList = request.fileList();
+    }
 
 }

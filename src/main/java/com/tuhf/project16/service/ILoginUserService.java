@@ -30,4 +30,6 @@ public interface ILoginUserService {
     /* Delete */
 
     int deleteLoginUserById(Long id);
+
+    int createBound(long loginUserId, long entityId);
 }

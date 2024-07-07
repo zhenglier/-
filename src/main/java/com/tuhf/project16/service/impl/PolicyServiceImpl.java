@@ -40,8 +40,8 @@ public class PolicyServiceImpl implements IPolicyService {
     }
 
     @Override
-    public PolicyBriefResponse getBriefByTags(Collection<String> tags) {
-        return policyMapper.getBriefByTags(tags);
+    public Collection<PolicyBriefResponse> getBriefsByTags(Collection<String> tags) {
+        return policyMapper.getBriefsByTags(tags);
     }
 
     @Override
