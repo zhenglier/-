@@ -84,7 +84,7 @@ public class TransController {
     }
 
     @GetMapping("/review/in")
-    public Collection<TransInOutReviewTableVO> getTransInReviewTableVO() {
+    public Collection<TransInOutReviewTableVO> getTransInReviewTableVO(@RequestParam String status) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Carrier carrier = entityService.getCarrierById(loginUserService.getEntityIdByUsername(username));
         Collection<TransInApplication> applications = transApplicationService.getInByCarrierId(carrier.getId());
@@ -92,14 +92,16 @@ public class TransController {
         ArrayList<TransInOutReviewTableVO> reviewTableVOs = new ArrayList<TransInOutReviewTableVO>();
         int index = 1;
         for (TransInApplication application : applications) {
-            reviewTableVOs.add(new TransInOutReviewTableVO(
-                    index++,
-                    application.getCreditCode(),
-                    application.getName(),
-                    application.getCreateAt(),
-                    application.getStatus(),
-                    application.getId()
-            ));
+            if(status.equals(application.getStatus())) {
+                reviewTableVOs.add(new TransInOutReviewTableVO(
+                        index++,
+                        application.getCreditCode(),
+                        application.getName(),
+                        application.getCreateAt(),
+                        application.getStatus(),
+                        application.getId()
+                ));
+            }
         }
 
         return reviewTableVOs;
@@ -107,7 +109,7 @@ public class TransController {
 
     @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/review/out")
-    public Collection<TransInOutReviewTableVO> getTransOutReviewTableVO() {
+    public Collection<TransInOutReviewTableVO> getTransOutReviewTableVO(@RequestParam String status) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Carrier carrier = entityService.getCarrierById(loginUserService.getEntityIdByUsername(username));
         Collection<TransOutApplication> applications = transApplicationService.getOutByCarrierId(carrier.getId());
@@ -116,14 +118,16 @@ public class TransController {
         int index = 1;
         for (TransOutApplication application : applications) {
             Enterprise enterprise = entityService.getEnterpriseById(application.getEnterpriseId());
-            reviewTableVOs.add(new TransInOutReviewTableVO(
-                    index++,
-                    enterprise.getCreditCode(),
-                    enterprise.getName(),
-                    application.getCreateAt(),
-                    application.getStatus(),
-                    application.getId()
-            ));
+            if(status.equals(application.getStatus())) {
+                reviewTableVOs.add(new TransInOutReviewTableVO(
+                        index++,
+                        enterprise.getCreditCode(),
+                        enterprise.getName(),
+                        application.getCreateAt(),
+                        application.getStatus(),
+                        application.getId()
+                ));
+            }
         }
 
         return reviewTableVOs;
