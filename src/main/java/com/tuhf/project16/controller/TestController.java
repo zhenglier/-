@@ -1,10 +1,13 @@
 package com.tuhf.project16.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
@@ -24,5 +27,13 @@ public class TestController {
     @PreAuthorize("hasAuthority('government')")
     public String government() {
         return "Hello, Government user.";
+    }
+
+    @PostMapping("/test")
+    public String test(@RequestParam Map<String,MultipartFile> file) throws IOException {
+        String name=file.keySet().iterator().next();
+        System.out.println(name);
+        System.out.println(new String(FileCopyUtils.copyToByteArray(file.get(name).getInputStream()), StandardCharsets.UTF_8));
+        return null;
     }
 }
