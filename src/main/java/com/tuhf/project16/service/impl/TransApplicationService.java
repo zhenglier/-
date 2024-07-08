@@ -18,12 +18,12 @@ public class TransApplicationService implements ITransApplicationService {
 
     @Override
     public int addTransOutApplication(TransOutApplication transOutApplication) {
-        return 0;
+        return transApplicationMapper.addOut(transOutApplication);
     }
 
     @Override
     public int addTransInApplication(TransInApplication transInApplication) {
-        return 0;
+        return transApplicationMapper.addIn(transInApplication);
     }
 
     @Override
@@ -34,6 +34,16 @@ public class TransApplicationService implements ITransApplicationService {
     @Override
     public Collection<TransOutApplication> getOutByCarrierId(long carrierId) {
         return transApplicationMapper.getOutByCarrierId(carrierId);
+    }
+
+    @Override
+    public TransOutApplication getInById(long id) {
+        return null;
+    }
+
+    @Override
+    public TransInApplication getOutById(long id) {
+        return null;
     }
 
 }

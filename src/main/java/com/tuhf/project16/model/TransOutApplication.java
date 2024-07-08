@@ -25,5 +25,7 @@ public class TransOutApplication {
 
     private String status;
 
+    private String type;
+
     private Date createAt;
 }

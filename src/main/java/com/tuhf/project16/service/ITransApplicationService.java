@@ -13,4 +13,8 @@ public interface ITransApplicationService {
     public Collection<TransInApplication> getInByCarrierId(long carrierId);
 
     public Collection<TransOutApplication> getOutByCarrierId(long carrierId);
+
+    public TransOutApplication getInById(long id);
+
+    public TransInApplication getOutById(long id);
 }

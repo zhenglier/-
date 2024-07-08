@@ -76,7 +76,8 @@ public class TransController {
                 request.transOutAt(),
                 request.comment(),
                 request.additionalData(),
-                "待审批", 
+                "待审批",
+                "毕业",
                 new Date()
         ));
         return new MessageResponse("Success");
@@ -127,4 +128,13 @@ public class TransController {
 
         return reviewTableVOs;
     }
+
+    @PreAuthorize("hasAuthority('carrier')")
+    @PutMapping("/review/in/accept/{id}")
+    public MessageResponse acceptIn(@PathVariable long id) {
+        // 验证是否为本载体所属
+//        if (transApplicationService.getInById(id).getCarrierId())
+        return null;
+    }
+
 }

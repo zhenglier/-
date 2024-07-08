@@ -20,7 +20,7 @@ public class AdminController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         if (!loginUserService.checkUsernameUnique(registerRequest.username())) {

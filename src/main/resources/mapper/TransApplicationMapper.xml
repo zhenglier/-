@@ -3,6 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tuhf.project16.mapper.TransApplicationMapper">
+    <insert id="addIn" parameterType="com.tuhf.project16.model.TransInApplication">
+        insert into trans_in_application(
+            name, carrier_id, credit_code, registered_capital, address, business, type, register_at, certification,
+            additional_data, status, create_at
+        ) value (
+            #{name},
+            #{carrierId},
+            #{creditCode},
+            #{registeredCapital},
+            #{address},
+            #{business},
+            #{type},
+            #{registerAt},
+            #{certification},
+            #{additionalData},
+            #{status},
+            #{createAt}
+        )
+    </insert>
+
+    <insert id="addOut" parameterType="com.tuhf.project16.model.TransOutApplication">
+        insert into trans_out_application(
+            enterprise_id, carrier_id, trans_out_at, comment, status, additional_data, type, create_at
+        ) value (
+            #{enterpriseId},
+            #{carrierId},
+            #{transOutAt},
+            #{comment},
+            #{status},
+            #{additionalData},
+            #{type},
+            #{createAt}
+            )
+    </insert>
+
     <select id="getOutByCarrierId" resultType="com.tuhf.project16.model.TransOutApplication">
         select * from trans_out_application
         where carrier_id = #{carrierId}
@@ -12,42 +47,5 @@
         select * from trans_in_application
         where carrier_id = #{carrierId}
     </select>
-    <!--
-    <select id="getAll" resultType="com.tuhf.project16.model.TransOutApplication">
-        select * from trans_out_application
-    </select>
-
-    <select id="getById" resultType="com.tuhf.project16.model.TransOutApplication">
-        select * from trans_out_application
-        where id = #{id}
-    </select>
-
-    <select id="getByCarrierId" resultType="com.tuhf.project16.model.TransOutApplication">
-        select * from trans_out_application
-        where carrier_id = #{carrierId}
-    </select>
-
-    <select id="getByEnterpriseId" resultType="com.tuhf.project16.model.TransOutApplication">
-        select * from trans_out_application
-        where enterprise_id = #{enterpriseId}
-    </select>
-
-    <select id="getByStatus" resultType="com.tuhf.project16.model.TransOutApplication">
-        select * from trans_out_application
-        where status = #{status}
-    </select>
-
-    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into trans_out_application(
-        enterprise_id, carrier_id, trans_out_at, comment, status
-        ) value (
-            #{enterpriseId},
-            #{carrierId},
-            #{moveAt},
-            #{comment},
-            #{status}
-        )
-    </insert>
-    -->
 
 </mapper>
