@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/trans")
@@ -84,7 +85,7 @@ public class TransController {
     }
 
     @GetMapping("/review/in")
-    public Collection<TransInOutReviewTableVO> getTransInReviewTableVO(@RequestParam String status) {
+    public Collection<TransInOutReviewTableVO> getTransInReviewTableVO(@RequestParam int status) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Carrier carrier = entityService.getCarrierById(loginUserService.getEntityIdByUsername(username));
         Collection<TransInApplication> applications = transApplicationService.getInByCarrierId(carrier.getId());
@@ -92,7 +93,7 @@ public class TransController {
         ArrayList<TransInOutReviewTableVO> reviewTableVOs = new ArrayList<TransInOutReviewTableVO>();
         int index = 1;
         for (TransInApplication application : applications) {
-            if(status.equals(application.getStatus())) {
+            if(status==1 ^ Objects.equals(application.getStatus(), "待审批")) {
                 reviewTableVOs.add(new TransInOutReviewTableVO(
                         index++,
                         application.getCreditCode(),
@@ -109,7 +110,7 @@ public class TransController {
 
     @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/review/out")
-    public Collection<TransInOutReviewTableVO> getTransOutReviewTableVO(@RequestParam String status) {
+    public Collection<TransInOutReviewTableVO> getTransOutReviewTableVO(@RequestParam int status) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Carrier carrier = entityService.getCarrierById(loginUserService.getEntityIdByUsername(username));
         Collection<TransOutApplication> applications = transApplicationService.getOutByCarrierId(carrier.getId());
@@ -118,7 +119,7 @@ public class TransController {
         int index = 1;
         for (TransOutApplication application : applications) {
             Enterprise enterprise = entityService.getEnterpriseById(application.getEnterpriseId());
-            if(status.equals(application.getStatus())) {
+            if(status==1 ^ Objects.equals(application.getStatus(), "待审批")) {
                 reviewTableVOs.add(new TransInOutReviewTableVO(
                         index++,
                         enterprise.getCreditCode(),
