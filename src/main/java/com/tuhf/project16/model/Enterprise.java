@@ -1,5 +1,6 @@
 package com.tuhf.project16.model;
 
+import com.tuhf.project16.payload.request.TransInRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Enterprise {
+    public static final int DELETED = 0;
+    public static final int NORMAL = 1;
+    public static final int PRE_IN = 2;
+    public static final int PRE_OUT = 3;
+    public static final int INFO = 4;
+
     private Long id;
+
+    private Long carrierId;
 
     private String name;
 
@@ -24,12 +33,15 @@ public class Enterprise {
 
     private String type;
 
-    private String industry;
+//    private String industry;
 
     private Date registerAt;
 
-    private Date enterAt;
+    private Date transInAt;
 
+    private String additionalData;
+
+    /*
     private String operatorName;
 
     private String contactName;
@@ -40,7 +52,6 @@ public class Enterprise {
 
     private String bankAccount;
 
-    private Long carrierId;
 
     private String carrierName;
 
@@ -54,7 +65,26 @@ public class Enterprise {
 
     private String logo;
 
-    private String additionalData;
-
     private String material;
+    */
+
+    private String status;
+
+    /* 正常1 预入驻2 预搬离3 信息载体4 删除 0 */
+    private int sysStatus;
+
+    public Enterprise(TransInRequest request) {
+        this.carrierId = request.carrierId();
+        this.name = request.name();
+        this.creditCode = request.creditCode();
+        this.registeredCapital = request.registeredCapital();
+        this.address = request.address();
+        this.business = request.business();
+        this.type = request.type();
+        this.registerAt = request.registerAt();
+        this.additionalData = request.additionalData();
+        this.status = "预设状态";
+
+        this.sysStatus = PRE_IN;
+    }
 }

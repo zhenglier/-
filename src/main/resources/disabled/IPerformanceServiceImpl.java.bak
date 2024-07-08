@@ -1,0 +1,86 @@
+package disabled;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tuhf.project16.mapper.PerformanceAppraisalApplicationItemMapper;
+import com.tuhf.project16.mapper.PerformanceAppraisalItemMapper;
+import com.tuhf.project16.mapper.PerformanceAppraisalTemplateMapper;
+import com.tuhf.project16.model.PerfApplication;
+import com.tuhf.project16.model.PerfItem;
+import com.tuhf.project16.model.PerfTemplate;
+import com.tuhf.project16.model.PerfReview;
+import com.tuhf.project16.service.IPerformanceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class IPerformanceServiceImpl implements IPerformanceService {
+
+    @Autowired
+    PerformanceAppraisalItemMapper performanceAppraisalItemMapper;
+    @Autowired
+    PerformanceAppraisalTemplateMapper performanceAppraisalTemplateMapper;
+    @Autowired
+    PerformanceAppraisalApplicationItemMapper performanceAppraisalApplicationItemMapper;
+    @Override
+    public void addTemplate(PerfTemplate perfTemplate) {
+
+        performanceAppraisalTemplateMapper.insert(perfTemplate);
+    }
+
+    @Override
+    public void addItem(PerfItem perfItem) {
+        performanceAppraisalItemMapper.insert(perfItem);
+    }
+
+    @Override
+    public PerfTemplate getTemplateById(long id) {
+        LambdaQueryWrapper<PerfTemplate> lqw = new LambdaQueryWrapper<PerfTemplate>();
+        lqw.eq(PerfTemplate::getId, id);
+        PerfTemplate PAT = performanceAppraisalTemplateMapper.selectOne(lqw);
+        System.out.println(PAT);
+        return PAT;
+    }
+
+    @Override
+    public void addApplication(PerfApplication perfApplication) {
+        performanceAppraisalApplicationItemMapper.insert(perfApplication);
+    }
+
+    @Override
+    public ArrayList<PerfApplication> getItemByDate(long id, Date date) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<PerfApplication> getItemByCarrier(long itemId, long carrierId) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<PerfReview> getItemById(long id) {
+//        Map<String, Object> PAAImap = new HashMap<>();
+//        PAAImap.put("pf_item_id", PAIid);
+//        List<PerformanceAppraisalApplicationItem> PAAIList = performanceAppraisalApplicationItemMapper.selectByMap(PAAImap);
+        LambdaQueryWrapper<PerfApplication> lqw = new LambdaQueryWrapper<PerfApplication>();
+        lqw.eq(PerfApplication::getPf_item_id, id);
+        List<PerfApplication> PAAIList = performanceAppraisalApplicationItemMapper.selectList(lqw);
+        ArrayList<PerfReview>PEIRList=new ArrayList<>();
+        for(int i=0;i<PAAIList.size();i++){
+            PerfReview p=new PerfReview();
+            PerfApplication PAAI=PAAIList.get(i);
+            LambdaQueryWrapper<PerfItem> lqw1 = new LambdaQueryWrapper<PerfItem>();
+            lqw1.eq(PerfItem::getId,PAAI.getPf_item_id());
+            PerfItem PAI = performanceAppraisalItemMapper.selectOne(lqw1);
+            p.setPfName(PAI.getName());
+            p.setEnd_date(PAI.getEndDate());
+            p.setCarrier_name(PAAI.getCarrier_name());
+            p.setScore(PAAI.getScore());
+            PEIRList.add(p);
+        }
+        return PEIRList;
+    }
+}

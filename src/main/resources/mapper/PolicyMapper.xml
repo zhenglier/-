@@ -56,7 +56,7 @@
         )
     </select>
 
-    <select id="getBriefByTags" resultMap="policyBriefResult">
+    <select id="getBriefsByTags" resultMap="policyBriefResult">
         select id, issuer_name, level, title, create_at, clicks from policy
         where id in (
             select policy_id from policy_tags

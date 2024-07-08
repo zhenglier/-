@@ -14,7 +14,7 @@ public interface PolicyMapper {
     Collection<Policy> getPoliciesByTags(Collection<String> tags);
     Policy getPolicyById(long id);
 
-    PolicyBriefResponse getBriefByTags(Collection<String> tags);
+    Collection<PolicyBriefResponse > getBriefsByTags(Collection<String> tags);
     Collection<PolicyBriefResponse> getAllBriefs();
     Collection<PolicyBriefResponse> getBriefsByPage(int offset, int limit);
 

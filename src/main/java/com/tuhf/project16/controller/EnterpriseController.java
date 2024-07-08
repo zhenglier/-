@@ -1,23 +1,24 @@
 package com.tuhf.project16.controller;
 
 import com.tuhf.project16.model.Enterprise;
-import com.tuhf.project16.model.MoveApplication;
+import com.tuhf.project16.model.TransOutApplication;
 import com.tuhf.project16.payload.response.MessageResponse;
-import com.tuhf.project16.service.IEnterpriseService;
-import com.tuhf.project16.service.IMoveApplicationService;
+import com.tuhf.project16.service.IEntityService;
+import com.tuhf.project16.service.ITransApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user/etp")
+@RequestMapping("/etp")
+@CrossOrigin("*")
 public class EnterpriseController {
 
     @Autowired
-    IEnterpriseService enterpriseService;
+    IEntityService enterpriseService;
 
     @Autowired
-    IMoveApplicationService moveApplicationService;
+    ITransApplicationService moveApplicationService;
 
     @PostMapping("/")
     public ResponseEntity<?> addEnterprise(@RequestBody Enterprise enterprise) {
@@ -55,7 +56,7 @@ public class EnterpriseController {
     }
 
     @PostMapping("/move")
-    public ResponseEntity<?> move(@RequestBody MoveApplication moveApplication) {
-        return ResponseEntity.ok().body(moveApplication);
+    public ResponseEntity<?> move(@RequestBody TransOutApplication transOutApplication) {
+        return ResponseEntity.ok().body(transOutApplication);
     }
 }
