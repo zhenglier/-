@@ -4,7 +4,7 @@ import com.tuhf.project16.model.TransOutApplication;
 
 import java.util.Collection;
 
-public interface MoveApplicationMapper {
+public interface TransApplicationMapper {
     public Collection<TransOutApplication> getAll();
 
     public TransOutApplication getById(long id);
