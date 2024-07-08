@@ -61,4 +61,9 @@ public class LoginUserServiceImpl implements ILoginUserService {
     public int deleteLoginUserById(Long id) {
         return loginUserMapper.deleteLoginUserById(id);
     }
+
+    @Override
+    public int createBound(long loginUserId, long entityId) {
+        return 0;
+    }
 }

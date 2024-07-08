@@ -2,7 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tuhf.project16.mapper.MoveApplicationMapper">
+<mapper namespace="com.tuhf.project16.mapper.TransApplicationMapper">
+    <insert id="addTransInApplication" parameterType="com.tuhf.project16.model.TransInApplication">
+        insert
+    </insert>
+
+    <!--
     <select id="getAll" resultType="com.tuhf.project16.model.TransOutApplication">
         select * from trans_out_application
     </select>
@@ -38,5 +43,6 @@
             #{status}
         )
     </insert>
+    -->
 
 </mapper>

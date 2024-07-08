@@ -42,6 +42,8 @@ public class TransInApplication {
 
     private String status;
 
+    private Date createAt;
+
     public TransInApplication(TransInRequest request) {
         this.name = request.name();
         this.carrierId = request.carrierId();

@@ -23,15 +23,4 @@ public class CarrierController {
     @Autowired
     ILoginUserService loginUserService;
 
-    /**
-     * 获取目标是本载体端的转移申请
-     * @return collection of MoveApplication
-     */
-    @GetMapping("/move")
-    public ResponseEntity<?> getMyMoveApplication() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok().body(moveApplicationService.getByCarrierId(
-                loginUserService.getIdByUsername(username)
-        ));
-    }
 }

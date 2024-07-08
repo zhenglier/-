@@ -7,17 +7,10 @@ import java.util.Collection;
 
 public interface ITransApplicationService {
     public int addTransOutApplication(TransOutApplication transOutApplication);
+
     public int addTransInApplication(TransInApplication transInApplication);
 
-    public Collection<TransOutApplication> getAll();
+    public Collection<TransInApplication> getInByCarrierId(long carrierId);
 
-    public TransOutApplication getById(long id);
-
-    public Collection<TransOutApplication> getByCarrierId(long carrierId);
-
-    public Collection<TransOutApplication> getByEnterpriseId(long enterpriseId);
-
-    public int add(TransOutApplication transOutApplication);
-
-    public Collection<TransOutApplication> getByStatus(String status);
+    public Collection<TransOutApplication> getOutByCarrierId(long carrierId);
 }
