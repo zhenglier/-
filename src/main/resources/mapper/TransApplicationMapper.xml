@@ -37,6 +37,16 @@
             #{createAt}
             )
     </insert>
+    <update id="setInStatus">
+        update trans_in_application
+        set status = #{status}
+        where id = #{id}
+    </update>
+    <update id="setOutStatus">
+        update trans_out_application
+        set status = #{status}
+        where id = #{id}
+    </update>
 
     <select id="getOutByCarrierId" resultType="com.tuhf.project16.model.TransOutApplication">
         select * from trans_out_application
@@ -46,6 +56,14 @@
     <select id="getInByCarrierId" resultType="com.tuhf.project16.model.TransInApplication">
         select * from trans_in_application
         where carrier_id = #{carrierId}
+    </select>
+    <select id="getInById" resultType="com.tuhf.project16.model.TransOutApplication">
+        select * from trans_in_application
+        where id = #{id}
+    </select>
+    <select id="getOutById" resultType="com.tuhf.project16.model.TransInApplication">
+        select * from trans_out_application
+        where id = #{id}
     </select>
 
 </mapper>

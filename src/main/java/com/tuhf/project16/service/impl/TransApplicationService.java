@@ -38,12 +38,22 @@ public class TransApplicationService implements ITransApplicationService {
 
     @Override
     public TransOutApplication getInById(long id) {
-        return null;
+        return transApplicationMapper.getInById(id);
     }
 
     @Override
     public TransInApplication getOutById(long id) {
-        return null;
+        return transApplicationMapper.getOutById(id);
+    }
+
+    @Override
+    public int setInStatus(long id, String status) {
+        return transApplicationMapper.setInStatus(id, status);
+    }
+
+    @Override
+    public int setOutStatus(long id, String status) {
+        return transApplicationMapper.setOutStatus(id, status);
     }
 
 }

@@ -13,6 +13,7 @@ import com.tuhf.project16.payload.vo.TransOutVO;
 import com.tuhf.project16.service.IEntityService;
 import com.tuhf.project16.service.ILoginUserService;
 import com.tuhf.project16.service.ITransApplicationService;
+import com.tuhf.project16.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,9 @@ public class TransController {
 
     @Autowired
     ITransApplicationService transApplicationService;
+
+    @Autowired
+    UserUtil userUtil;
 
     /* 可用载体列表 */
     @GetMapping("/in")
@@ -137,9 +141,52 @@ public class TransController {
     @PreAuthorize("hasAuthority('carrier')")
     @PutMapping("/review/in/accept/{id}")
     public MessageResponse acceptIn(@PathVariable long id) {
+
         // 验证是否为本载体所属
-//        if (transApplicationService.getInById(id).getCarrierId())
-        return null;
+        if (!Objects.equals(transApplicationService.getInById(userUtil.getCrrId()).getCarrierId(), userUtil.getCrrId())) {
+            return new MessageResponse("没有权限");
+        }
+
+        transApplicationService.setInStatus(id, "已完成");
+        return new MessageResponse("操作成功");
     }
 
+    @PreAuthorize("hasAuthority('carrier')")
+    @PutMapping("/review/out/accept/{id}")
+    public MessageResponse acceptOut(@PathVariable long id) {
+
+        // 验证是否为本载体所属
+        if (!Objects.equals(transApplicationService.getOutById(userUtil.getCrrId()).getCarrierId(), userUtil.getCrrId())) {
+            return new MessageResponse("没有权限");
+        }
+
+        transApplicationService.setOutStatus(id, "已完成");
+        return new MessageResponse("操作成功");
+    }
+
+    @PreAuthorize("hasAuthority('carrier')")
+    @PutMapping("/review/in/reject/{id}")
+    public MessageResponse rejectIn(@PathVariable long id) {
+
+        // 验证是否为本载体所属
+        if (!Objects.equals(transApplicationService.getInById(userUtil.getCrrId()).getCarrierId(), userUtil.getCrrId())) {
+            return new MessageResponse("没有权限");
+        }
+
+        transApplicationService.setInStatus(id, "已拒绝");
+        return new MessageResponse("操作成功");
+    }
+
+    @PreAuthorize("hasAuthority('carrier')")
+    @PutMapping("/review/out/reject/{id}")
+    public MessageResponse rejectOut(@PathVariable long id) {
+
+        // 验证是否为本载体所属
+        if (!Objects.equals(transApplicationService.getOutById(userUtil.getCrrId()).getCarrierId(), userUtil.getCrrId())) {
+            return new MessageResponse("没有权限");
+        }
+
+        transApplicationService.setOutStatus(id, "已拒绝");
+        return new MessageResponse("操作成功");
+    }
 }
