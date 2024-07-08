@@ -68,7 +68,8 @@
         where (source_id=#{sourceId} or #{sourceId}=-1) and
               (source_type=#{sourceType} or #{sourceType}=-1) and
               (destination_id=#{destinationId} or #{destinationId}=-1) and
-              (destination_type=#{destinationType} or #{destinationType}=-1);
+              (destination_type=#{destinationType} or #{destinationType}=-1)
+        LIMIT #{offset},#{count};
     </select>
 
 
@@ -85,6 +86,15 @@
     <select id="getProgramReviewById">
         select * from program_review
         where id=#{id} LIMIT 1;
+    </select>
+
+    <select id="getProgramReviews">
+        select * from program_review
+        where (source_id=#{sourceId} or #{sourceId}=-1) and
+            (source_type=#{sourceType} or #{sourceType}=-1) and
+            (destination_id=#{destinationId} or #{destinationId}=-1) and
+            (destination_type=#{destinationType} or #{destinationType}=-1)
+        LIMIT #{offset},#{count};
     </select>
 
 </mapper>

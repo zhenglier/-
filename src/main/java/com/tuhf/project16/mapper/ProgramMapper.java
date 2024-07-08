@@ -28,9 +28,14 @@ public interface ProgramMapper {
         type企业enterprise为0，载体carrier为1，政务government为2
         id,type不受限制则填写-1
      */
-    Collection<ProgramApplication> getProgramApplications(long sourceId, long sourceType,
+    Collection<ProgramApplication> getProgramApplications(int offset, int count,
+                                                          long sourceId, long sourceType,
                                                           long destinationId, long destinationType);
     ProgramReview getProgramReviewById(Long id);
+
+    Collection<ProgramReview> getProgramReviews(int offset, int count,
+                                                long sourceId, long sourceType,
+                                                long destinationId, long destinationType);
 
     void addProgramReview(ProgramReview programReview);
 
