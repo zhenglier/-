@@ -17,6 +17,8 @@ public interface IEntityService {
 
     Enterprise getEnterpriseById(long id);
 
+    String getEnterpriseNameById(long id);
+
     Carrier getCarrierById(long id);
 
     Government getGovernmentById(long id);

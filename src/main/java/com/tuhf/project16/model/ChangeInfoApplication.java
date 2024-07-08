@@ -16,6 +16,8 @@ public class ChangeInfoApplication {
 
     private Long carrierId;
 
+    private String type;
+
     private String before;
 
     private String after;
@@ -23,4 +25,6 @@ public class ChangeInfoApplication {
     private String material;
 
     private Date date;
+
+    private String status;
 }

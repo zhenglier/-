@@ -39,6 +39,11 @@ public class EntityService implements IEntityService {
     }
 
     @Override
+    public String getEnterpriseNameById(long id) {
+        return getEnterpriseById(id).getName();
+    }
+
+    @Override
     public Carrier getCarrierById(long id) {
         return entityMapper.getCarrierById(id);
     }

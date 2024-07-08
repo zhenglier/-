@@ -4,13 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tuhf.project16.mapper.EntityMapper">
-    <resultMap id="enterpriseResult" type="com.tuhf.project16.model.Enterprise">
-        <association property="carrierName" select="getCarrierName" column="carrier_id"/>
-    </resultMap>
-    <resultMap id="enterpriseBriefResult" type="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
-        <association property="carrierName" select="getCarrierName" column="carrier_id"/>
-    </resultMap>
-
     <insert id="addEnterprise" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into entity_enterprise(
             credit_code, name, registerd_capital, type, industry, address, register_at, operator_name,

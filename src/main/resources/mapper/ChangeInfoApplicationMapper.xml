@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tuhf.project16.mapper.ChangeInfoApplicationMapper">
+    <insert id="addApplication">
+        insert into change_info_application(
+        enterprise_id, carrier_id, `before`, after, material, date, status, type
+        ) value (
+            #{enterpriseId},
+            #{carrierId},
+            #{before},
+            #{after},
+            #{material},
+            #{date},
+            #{status},
+            #{type}
+        )
+    </insert>
+
+    <select id="getApplicationsByCarrierId" resultType="com.tuhf.project16.model.ChangeInfoApplication">
+        select * from change_info_application
+        where id = #{id}
+    </select>
+</mapper>

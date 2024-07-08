@@ -6,14 +6,19 @@ import com.tuhf.project16.model.Enterprise;
 import com.tuhf.project16.model.Government;
 import com.tuhf.project16.payload.request.ChangeInfoRequest;
 import com.tuhf.project16.payload.response.MessageResponse;
+import com.tuhf.project16.payload.vo.ChangeInfoReviewTableVO;
 import com.tuhf.project16.payload.vo.ChangeInfoVO;
 import com.tuhf.project16.service.IChangeInfoApplicationService;
 import com.tuhf.project16.service.IEntityService;
 import com.tuhf.project16.service.ILoginUserService;
+import com.tuhf.project16.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/info")
@@ -29,6 +34,9 @@ public class InfoController {
 
     @Autowired
     IChangeInfoApplicationService changeInfoApplicationService;
+
+    @Autowired
+    UserUtil userUtil;
 
     @PreAuthorize("hasRole('enterprise')")
     @GetMapping("/etp")
@@ -76,10 +84,12 @@ public class InfoController {
                 null,
                 enterpriseId,
                 entityService.getParentIdForEnterprise(enterpriseId),
+                request.type(),
                 beforeInfoSelect(enterprise, request.type()),
                 request.after(),
                 request.material(),
-                request.date()
+                request.date(),
+                "待审批"
         );
 
         int flag = changeInfoApplicationService.addApplication(application);
@@ -98,6 +108,29 @@ public class InfoController {
         Enterprise enterprise = entityService.getEnterpriseById(enterpriseId);
         return new ChangeInfoVO(beforeInfoSelect(enterprise, type));
     }
+
+    @PreAuthorize("hasAuthority('carrier')")
+    @GetMapping("/review")
+    public Collection<ChangeInfoReviewTableVO> getReviewVO() {
+        Collection<ChangeInfoApplication> applications =
+                changeInfoApplicationService.getApplicationsByCarrierId(userUtil.getCrrId());
+
+        ArrayList<ChangeInfoReviewTableVO> vos = new ArrayList<>();
+        int index = 1;
+        for (ChangeInfoApplication application : applications) {
+            vos.add(new ChangeInfoReviewTableVO(
+                    index++,
+                    entityService.getEnterpriseNameById(application.getEnterpriseId()),
+                    application.getDate(),
+                    application.getType(),
+                    application.getStatus(),
+                    application.getId()
+            ));
+        }
+
+        return vos;
+    }
+
 
     private static String beforeInfoSelect(Enterprise enterprise, String type) {
         return switch (type) {
