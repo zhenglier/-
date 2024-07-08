@@ -9,6 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -40,6 +48,24 @@ class Project16ApplicationTests {
         Long id = loginUserService.getLoginUserByUsername("admin").getId();
         loginUserService.deleteLoginUserById(id);
         assertTrue(loginUserService.checkUsernameUnique("admin"));
+    }
+
+    @Test
+    void checksumTest() {
+         String data = "fuck you";
+         InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            DigestInputStream dis = new DigestInputStream(inputStream, digest);
+            byte[] buffer = digest.digest();
+            StringBuilder hash = new StringBuilder();
+            for (byte b : buffer) {
+                hash.append(Integer.toHexString(b & 0xff));
+            }
+            System.out.println(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
