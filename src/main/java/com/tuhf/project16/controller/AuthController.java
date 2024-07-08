@@ -91,7 +91,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         if (!loginUserService.checkUsernameUnique(registerRequest.username())) {
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.ok().body(
                     new MessageResponse("Username is already taken!"));
         }
 

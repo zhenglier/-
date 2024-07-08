@@ -43,15 +43,17 @@ public class ProgramController {
 
     @GetMapping("application/query")
     @PreAuthorize("hasAnyAuthority('enterprise','carrier','government')")
-    public ResponseEntity<?> getApplicationById(@RequestParam(value = "id",defaultValue = "-1") Long id,
-                                                @RequestParam(value = "sourceId",defaultValue = "-1") Long sourceId,
-                                                @RequestParam(value = "sourceType",defaultValue = "-1") int sourceType,
-                                                @RequestParam(value = "destinationId",defaultValue = "-1") Long destinationId,
-                                                @RequestParam(value = "destinationType",defaultValue = "-1") int destinationType) {
+    public ResponseEntity<?> getApplicationById(@RequestParam(defaultValue = "1") int page,
+                                                @RequestParam(defaultValue = "-1") Long id,
+                                                @RequestParam(defaultValue = "-1") Long sourceId,
+                                                @RequestParam(defaultValue = "-1") int sourceType,
+                                                @RequestParam(defaultValue = "-1") Long destinationId,
+                                                @RequestParam(defaultValue = "-1") int destinationType) {
         if(id!=-1) {
             return ResponseEntity.ok(programMapper.getProgramApplicationById(id));
         }else{
-            return ResponseEntity.ok(programMapper.getProgramApplications(sourceId,sourceType,destinationId,destinationType));
+            int pageSize=10;
+            return ResponseEntity.ok(programMapper.getProgramApplications((page-1)*pageSize,pageSize,sourceId,sourceType,destinationId,destinationType));
         }
     }
 
@@ -71,8 +73,18 @@ public class ProgramController {
 
     @GetMapping("review/query")
     @PreAuthorize("hasAnyAuthority('enterprise','carrier','government')")
-    public ResponseEntity<?> getReviewById(@RequestParam Long id){
-        return ResponseEntity.ok(programMapper.getProgramReviewById(id));
+    public ResponseEntity<?> getReviewById(@RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "-1") Long id,
+                                           @RequestParam(defaultValue = "-1") Long sourceId,
+                                           @RequestParam(defaultValue = "-1") int sourceType,
+                                           @RequestParam(defaultValue = "-1") Long destinationId,
+                                           @RequestParam(defaultValue = "-1") int destinationType){
+        if(id!=-1){
+            return ResponseEntity.ok(programMapper.getProgramReviewById(id));
+        }else{
+            int pageSize=10;
+            return ResponseEntity.ok(programMapper.getProgramReviews((page-1)*pageSize,pageSize,sourceId,sourceType,destinationId,destinationType));
+        }
     }
 
 }

@@ -23,7 +23,7 @@ class Project16ApplicationTests {
     @Test
     void testProgramMapper(){
 
-        System.out.println(programMapper.getProgramApplications(-1L,-1,-1L,-1));
+        System.out.println(programMapper.getProgramApplications(1,-1L,-1,-1L,-1));
 
 
 //        programMapper.addProgramTemplate(new ProgramTemplate(
