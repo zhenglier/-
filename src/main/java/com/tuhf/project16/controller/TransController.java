@@ -24,7 +24,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/trans")
-@PreAuthorize("hasRole('enterprise')")
+@PreAuthorize("hasAnyAuthority('enterprise', 'carrier')")
+@CrossOrigin("*")
 public class TransController {
 
     @Autowired
@@ -103,6 +104,7 @@ public class TransController {
         return reviewTableVOs;
     }
 
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/review/out")
     public Collection<TransInOutReviewTableVO> getTransOutReviewTableVO() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

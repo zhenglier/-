@@ -33,7 +33,7 @@ public class TransApplicationService implements ITransApplicationService {
 
     @Override
     public Collection<TransOutApplication> getOutByCarrierId(long carrierId) {
-        return List.of();
+        return transApplicationMapper.getByCarrierId(carrierId);
     }
 
 }

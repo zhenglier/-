@@ -88,6 +88,8 @@ public class SecurityConfig { // extends WebSecurityConfigurerAdapter {
 //                                .requestMatchers("/user/**").permitAll()
 //                                .anyRequest().authenticated()
 //                );
+        http.authorizeHttpRequests(auth ->
+                auth.anyRequest().permitAll());
 
         http.authenticationProvider(authenticationProvider());
 

@@ -28,7 +28,7 @@
 
     <select id="getEntityIdById" parameterType="long" resultType="long">
         select entity_id from login_entity
-        where login_user_id = #{LoginUserId}
+        where login_id = #{id}
     </select>
 
     <update id="updatePasswordById">

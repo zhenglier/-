@@ -40,7 +40,7 @@ public class EntityService implements IEntityService {
 
     @Override
     public Carrier getCarrierById(long id) {
-        return null;
+        return entityMapper.getCarrierById(id);
     }
 
     @Override

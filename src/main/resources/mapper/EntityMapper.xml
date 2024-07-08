@@ -93,4 +93,9 @@
         select ec.parent_id from entity_carrier ec
         where ec.id = #{carrierId}
     </select>
+
+    <select id="getCarrierById" resultType="com.tuhf.project16.model.Carrier">
+        select * from entity_carrier ec
+        where ec.id = #{id}
+    </select>
 </mapper>
