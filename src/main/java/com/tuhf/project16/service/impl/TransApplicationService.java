@@ -28,12 +28,12 @@ public class TransApplicationService implements ITransApplicationService {
 
     @Override
     public Collection<TransInApplication> getInByCarrierId(long carrierId) {
-        return List.of();
+        return transApplicationMapper.getInByCarrierId(carrierId);
     }
 
     @Override
     public Collection<TransOutApplication> getOutByCarrierId(long carrierId) {
-        return transApplicationMapper.getByCarrierId(carrierId);
+        return transApplicationMapper.getOutByCarrierId(carrierId);
     }
 
 }

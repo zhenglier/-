@@ -1,5 +1,6 @@
 package com.tuhf.project16.mapper;
 
+import com.tuhf.project16.model.TransInApplication;
 import com.tuhf.project16.model.TransOutApplication;
 
 import java.util.Collection;
@@ -9,7 +10,9 @@ public interface TransApplicationMapper {
 
     public TransOutApplication getById(long id);
 
-    public Collection<TransOutApplication> getByCarrierId(long carrierId);
+    public Collection<TransInApplication> getInByCarrierId(long carrierId);
+
+    public Collection<TransOutApplication> getOutByCarrierId(long carrierId);
 
     public Collection<TransOutApplication> getByEnterpriseId(long enterpriseId);
 
