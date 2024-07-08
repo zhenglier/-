@@ -20,23 +20,7 @@ class Project16ApplicationTests {
     @Autowired
     ProgramMapper programMapper;
 
-    @Test
-    void testProgramMapper(){
-
-        System.out.println(programMapper.getProgramApplications(1,-1L,-1,-1L,-1));
-
-
-//        programMapper.addProgramTemplate(new ProgramTemplate(
-//                1L,
-//                "testTemplate",
-//                1L,
-//                2,
-//                "114514"
-//        ));
-    }
-
-
-    @Test
+     @Test
     void contextLoads() {
     }
 
