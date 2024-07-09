@@ -33,7 +33,7 @@ public class Enterprise {
 
     private String type;
 
-//    private String industry;
+    private String industry;
 
     private Date registerAt;
 
@@ -41,9 +41,9 @@ public class Enterprise {
 
     private String additionalData;
 
-    /*
     private String operatorName;
 
+    /*
     private String contactName;
 
     private String contactPhone;

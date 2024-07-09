@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +19,12 @@ public class File {
 
     private byte[] data;
 
+    private Date uploadAt;
+
     public File(String name, String hash, byte[] data) {
         this.name = name;
         this.hash = hash;
         this.data = data;
+        this.uploadAt = new Date();
     }
 }

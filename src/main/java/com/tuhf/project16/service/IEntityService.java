@@ -32,4 +32,6 @@ public interface IEntityService {
 
     Long getParentIdForEnterprise(long EnterpriseId);
     Long getParentIdForCarrier(long carrierId);
+
+
 }

@@ -8,6 +8,7 @@ import com.tuhf.project16.payload.request.ChangeInfoRequest;
 import com.tuhf.project16.payload.response.MessageResponse;
 import com.tuhf.project16.payload.vo.ChangeInfoReviewTableVO;
 import com.tuhf.project16.payload.vo.ChangeInfoVO;
+import com.tuhf.project16.payload.vo.EnterpriseInfoVO;
 import com.tuhf.project16.service.IChangeInfoApplicationService;
 import com.tuhf.project16.service.IEntityService;
 import com.tuhf.project16.service.ILoginUserService;
@@ -40,9 +41,24 @@ public class InfoController {
 
     @PreAuthorize("hasRole('enterprise')")
     @GetMapping("/etp")
-    public Enterprise getEnterprise() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return entityService.getEnterpriseById(loginUserService.getEntityIdByUsername(username));
+    public EnterpriseInfoVO getEnterprise() {
+        Enterprise enterprise = entityService.getEnterpriseById(userUtil.getEtpId());
+        return new EnterpriseInfoVO(
+                enterprise.getId(),
+                enterprise.getCreditCode(),
+                enterprise.getName(),
+                enterprise.getRegisteredCapital(),
+                enterprise.getType(),
+                enterprise.getIndustry(),
+                enterprise.getAddress(),
+                enterprise.getRegisterAt(),
+                enterprise.getOperatorName(),
+                entityService.getCarrierById(enterprise.getCarrierId()).getName(),
+                enterprise.getBusiness(),
+                enterprise.getTransInAt(),
+                enterprise.getStatus(),
+                enterprise.getAdditionalData()
+        );
     }
 
     @PreAuthorize("hasRole('carrier')")
@@ -63,9 +79,7 @@ public class InfoController {
     @PreAuthorize("hasRole('enterprise')")
     @PutMapping("/etp")
     public MessageResponse setEnterpriseBasics(@RequestBody String additionalData) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        long id = loginUserService.getEntityIdByUsername(username);
-        int flag = entityService.setEnterpriseAdditionalData(id, additionalData);
+        int flag = entityService.setEnterpriseAdditionalData(userUtil.getCrrId(), additionalData);
         if (flag == 1) {
             return new MessageResponse("Success");
         } else {
@@ -73,13 +87,12 @@ public class InfoController {
         }
     }
 
-    /* 传入的enterprise只需要有需要更改的字段即可 */
+    /* 重大信息更改 */
     @PreAuthorize("hasRole('enterprise')")
     @PostMapping("/etp")
     public MessageResponse modInfo(@RequestBody ChangeInfoRequest request) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        long enterpriseId = loginUserService.getEntityIdByUsername(username);
-        Enterprise enterprise = entityService.getEnterpriseById(enterpriseId);
+        long enterpriseId = userUtil.getEtpId();
+        Enterprise enterprise = entityService.getEnterpriseById(userUtil.getEtpId());
         ChangeInfoApplication application = new ChangeInfoApplication(
                 null,
                 enterpriseId,

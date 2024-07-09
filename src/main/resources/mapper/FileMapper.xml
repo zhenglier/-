@@ -6,11 +6,12 @@
 <mapper namespace="com.tuhf.project16.mapper.FileMapper">
     <insert id="add" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into file_vault(
-            hash, name, data
+            hash, name, data, upload_at
         ) value (
             #{hash},
             #{name},
-            #{data}
+            #{data},
+            #{uploadAt}
         )
     </insert>
 
