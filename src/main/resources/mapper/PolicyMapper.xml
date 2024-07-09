@@ -8,7 +8,7 @@
         <collection property="tags" ofType="string" select="getTags" javaType="java.util.HashSet" column="id"/>
     </resultMap>
 
-    <resultMap id="policyBriefResult" type="com.tuhf.project16.payload.response.PolicyBriefResponse">
+    <resultMap id="policyBriefResult" type="com.tuhf.project16.payload.vo.PolicyTableVO">
         <id property="id" column="id"/>
         <collection property="tags" ofType="string" select="getTags" javaType="java.util.HashSet" column="id"/>
     </resultMap>

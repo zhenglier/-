@@ -12,6 +12,7 @@ public record TransInRequest(
 
         Integer registeredCapital,
 
+        /* 注册地址 */
         String address,
 
         /* 主营业务 */
@@ -25,10 +26,13 @@ public record TransInRequest(
         /* 注册时间 */
         Date registerAt,
 
-        /* 认证情况，用下划线分割 */
+        /*
+        认证情况，用下划线分割
+        如 “高企_科技小巨人”
+        */
         String certification,
 
-        /* JSON */
+        /* JSON，上面没有的所有其他字段都放这里 */
         String additionalData
 
 ){

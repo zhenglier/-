@@ -1,7 +1,7 @@
 package com.tuhf.project16.mapper;
 
 import com.tuhf.project16.model.Policy;
-import com.tuhf.project16.payload.response.PolicyBriefResponse;
+import com.tuhf.project16.payload.vo.PolicyTableVO;
 
 import java.util.Collection;
 import java.util.Set;
@@ -14,9 +14,9 @@ public interface PolicyMapper {
     Collection<Policy> getPoliciesByTags(Collection<String> tags);
     Policy getPolicyById(long id);
 
-    Collection<PolicyBriefResponse > getBriefsByTags(Collection<String> tags);
-    Collection<PolicyBriefResponse> getAllBriefs();
-    Collection<PolicyBriefResponse> getBriefsByPage(int offset, int limit);
+    Collection<PolicyTableVO> getBriefsByTags(Collection<String> tags);
+    Collection<PolicyTableVO> getAllBriefs();
+    Collection<PolicyTableVO> getBriefsByPage(int offset, int limit);
 
     int increaseClicks(long id);
 }

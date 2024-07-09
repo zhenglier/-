@@ -1,4 +1,4 @@
-package com.tuhf.project16.payload.response;
+package com.tuhf.project16.payload.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PolicyBriefResponse {
+public class PolicyTableVO {
     /* 政策id */
     private Long id;
 

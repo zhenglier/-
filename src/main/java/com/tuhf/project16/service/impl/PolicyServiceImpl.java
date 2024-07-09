@@ -2,7 +2,7 @@ package com.tuhf.project16.service.impl;
 
 import com.tuhf.project16.mapper.PolicyMapper;
 import com.tuhf.project16.model.Policy;
-import com.tuhf.project16.payload.response.PolicyBriefResponse;
+import com.tuhf.project16.payload.vo.PolicyTableVO;
 import com.tuhf.project16.service.IPolicyService;
 import com.tuhf.project16.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +40,17 @@ public class PolicyServiceImpl implements IPolicyService {
     }
 
     @Override
-    public Collection<PolicyBriefResponse> getBriefsByTags(Collection<String> tags) {
+    public Collection<PolicyTableVO> getBriefsByTags(Collection<String> tags) {
         return policyMapper.getBriefsByTags(tags);
     }
 
     @Override
-    public Collection<PolicyBriefResponse> getAllBriefs() {
+    public Collection<PolicyTableVO> getAllBriefs() {
         return policyMapper.getAllBriefs();
     }
 
     @Override
-    public Collection<PolicyBriefResponse> getBriefsByPage(int page) {
+    public Collection<PolicyTableVO> getBriefsByPage(int page) {
         return policyMapper.getBriefsByPage(PageUtil.calOffset(page, PAGE_SIZE), PAGE_SIZE);
     }
 
