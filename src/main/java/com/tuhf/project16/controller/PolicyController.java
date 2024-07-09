@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/policy")
 @CrossOrigin("*")
-@PreAuthorize("hasAnyRole('enterprise', 'carrier', 'enterprise')")
+@PreAuthorize("hasAnyAuthority('enterprise', 'carrier', 'enterprise')")
 public class PolicyController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class PolicyController {
     @Autowired
     ILoginUserService loginUserService;
 
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @PostMapping("/")
     public MessageResponse addPolicy(@RequestBody Policy policy) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

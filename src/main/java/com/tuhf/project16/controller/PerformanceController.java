@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 //@RequestMapping("/user/performance")
 @RequestMapping("/performance")
-//@PreAuthorize("hasRole('carrier') or hasRole('government')")
+//@PreAuthorize("hasAuthority('carrier') or hasAuthority('government')")
 public class PerformanceController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class PerformanceController {
     /**
      * 载体端：获取本载体所属政务端发布的考核项
      */
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/item")
     public ResponseEntity<?> getItemsForCarrier() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -47,7 +47,7 @@ public class PerformanceController {
      * @param perfApplication
      * @return 消息
      */
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @PostMapping("/commit")
     public ResponseEntity<?> commitItem(@RequestBody PerfApplication perfApplication){
         performanceService.addApplication(perfApplication);
@@ -60,7 +60,7 @@ public class PerformanceController {
      * @param id 模板id
      * @return PerfTemplate
      */
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/template/{id}")
     public ResponseEntity<?> getTemplate(@PathVariable long id) {
         return ResponseEntity.ok().body(
@@ -71,7 +71,7 @@ public class PerformanceController {
     /**
      * 载体端：查看本端的所有申请项目
      */
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/app")
     public ResponseEntity<?> getMyAppsForCarrier() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -83,7 +83,7 @@ public class PerformanceController {
     /**
      * 载体端：查看本端的所有审批结果
      */
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/review/crr")
     public ResponseEntity<?> getMyReviewsForCarrier() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -96,7 +96,7 @@ public class PerformanceController {
      *政务端：获取所有模板
      * @return Collection of PerfTemplate
      */
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @GetMapping("/template")
     public ResponseEntity<?> getAllTemplates() {
         return ResponseEntity.ok().body(
@@ -109,7 +109,7 @@ public class PerformanceController {
      * @param template
      * @return 消息
      */
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @PostMapping("/template")
     public ResponseEntity<?> createTemplate(@RequestBody PerfTemplate template){
         performanceService.addTemplate(template);
@@ -122,7 +122,7 @@ public class PerformanceController {
      * @param item
      * @return 消息
      */
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @PostMapping("/issue")
     public ResponseEntity<?> issuePerf(@RequestBody PerfItem item){
         performanceService.addItem(item);
@@ -133,7 +133,7 @@ public class PerformanceController {
     /**
      * 政务端：添加添加审核结果
      */
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @PostMapping("/review")
     public ResponseEntity<?> addReview(@RequestBody PerfReview review){
         performanceService.addReview(review);
@@ -146,7 +146,7 @@ public class PerformanceController {
      * 政务端：查看需要本端审批的审核条目
      * @return
      */
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @GetMapping("/review/gov")
     public ResponseEntity<?> getMyReviewsForIssuer() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -160,7 +160,7 @@ public class PerformanceController {
      * @param appId 申请项id
      * @return
      */
-    @PreAuthorize("hasAnyRole('government', 'carrier')")
+    @PreAuthorize("hasAnyAuthority('government', 'carrier')")
     @GetMapping("/review/{id}")
     public ResponseEntity<?> reviewPerf(@RequestParam long appId){
         return ResponseEntity.ok().body(

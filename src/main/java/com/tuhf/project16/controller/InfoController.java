@@ -24,7 +24,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/info")
 @CrossOrigin("*")
-@PreAuthorize("hasAnyRole('enterprise', 'carrier', 'government')")
+@PreAuthorize("hasAnyAuthority('enterprise', 'carrier', 'government')")
 public class InfoController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class InfoController {
     @Autowired
     UserUtil userUtil;
 
-    @PreAuthorize("hasRole('enterprise')")
+    @PreAuthorize("hasAuthority('enterprise')")
     @GetMapping("/etp")
     public EnterpriseInfoVO getEnterprise() {
         Enterprise enterprise = entityService.getEnterpriseById(userUtil.getEtpId());
@@ -61,14 +61,14 @@ public class InfoController {
         );
     }
 
-    @PreAuthorize("hasRole('carrier')")
+    @PreAuthorize("hasAuthority('carrier')")
     @GetMapping("/crr")
     public Carrier getCarrier() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return entityService.getCarrierById(loginUserService.getEntityIdByUsername(username));
     }
 
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     @GetMapping("/gov")
     public Government getGovernment() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -76,7 +76,7 @@ public class InfoController {
     }
 
 
-    @PreAuthorize("hasRole('enterprise')")
+    @PreAuthorize("hasAuthority('enterprise')")
     @PutMapping("/etp")
     public MessageResponse setEnterpriseBasics(@RequestBody String additionalData) {
         int flag = entityService.updateEnterpriseAdditionalData(userUtil.getCrrId(), additionalData);
@@ -88,7 +88,7 @@ public class InfoController {
     }
 
     /* 重大信息更改 */
-    @PreAuthorize("hasRole('enterprise')")
+    @PreAuthorize("hasAuthority('enterprise')")
     @PostMapping("/etp")
     public MessageResponse modInfo(@RequestBody ChangeInfoRequest request) {
         long enterpriseId = userUtil.getEtpId();
@@ -113,7 +113,7 @@ public class InfoController {
         }
     }
 
-    @PreAuthorize("hasRole('enterprise')")
+    @PreAuthorize("hasAuthority('enterprise')")
     @RequestMapping(value = "/etp", method = RequestMethod.GET, params = "type")
     public ChangeInfoVO getBeforeInfo(@RequestParam("type") String type) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

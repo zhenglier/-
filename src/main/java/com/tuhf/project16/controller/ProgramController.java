@@ -27,7 +27,7 @@ public class ProgramController {
     ProgramMapper programMapper;
 
     @PostMapping("/template/add")
-    @PreAuthorize("hasRole('government')")
+    @PreAuthorize("hasAuthority('government')")
     public ResponseEntity<?> addProgramTemplate(@RequestBody AddProgramTemplateRequest addProgramTemplateRequest) {
         try {
             programMapper.addProgramTemplate(new ProgramTemplate(addProgramTemplateRequest));
@@ -60,7 +60,7 @@ public class ProgramController {
     }
 
     @PostMapping("application/add")
-    @PreAuthorize("hasAnyRole('enterprise', 'carrier')")
+    @PreAuthorize("hasAnyAuthority('enterprise', 'carrier')")
     public MessageResponse addApplication(@RequestBody AddProgramApplicationRequest addProgramApplicationRequest){
         programMapper.addProgramApplication(new ProgramApplication(addProgramApplicationRequest));
         return new MessageResponse("Program application successfully added!");
