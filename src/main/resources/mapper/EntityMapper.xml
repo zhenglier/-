@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tuhf.project16.mapper.EntityMapper">
+    <!--
     <insert id="addEnterprise" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into entity_enterprise(
             credit_code, name, registerd_capital, type, industry, address, register_at, operator_name,
@@ -35,9 +36,40 @@
             sysdate()
         )
     </insert>
+    -->
+    <insert id="addEnterprise" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into entity_enterprise(
+            carrier_id, name, credit_code, registerd_capital, address, business, type, industry, register_at,
+            trans_in_at, additional_data, operator_name, update_at
+        ) value (
+                 #{carrierId},
+                 #{name},
+                 #{creditCode},
+                 #{registeredCapital},
+                 #{address},
+                 #{business},
+                 #{type},
+                 #{industry},
+                 #{registerAt},
+                 #{transInAt},
+                 #{additionalData},
+                 #{operatorName},
+                 sysdate()
+            )
+    </insert>
 
-    <update id="updateEnterprise">
-        update entity_enterprise
+    <insert id="addCarrier" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into entity_carrier(name, government_id) value (
+            #{name}, #{governmentId}
+        )
+    </insert>
+
+    <insert id="addGovernment" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into entity_government(name) value (#{name})
+    </insert>
+
+    <!--
+    <update id="updateEnterprise"> update entity_enterprise
         <set>
             <if test="name != null">name = #{name},</if>
             <if test="creditCode != null">credit_code = #{creditCode},</if>
@@ -62,33 +94,89 @@
         </set>
         where id = #{id}
     </update>
+    -->
+
+    <update id="updateEnterprise">
+        update entity_enterprise
+        <set>
+            <if test="carrierId != null">carrier_id = #{carrierId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="creditCode != null">credit_code = #{creditCode},</if>
+            <if test="registeredCapital != null">registered_capital = #{registeredCapital},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="business != null">business = #{business},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="industry != null">industry = #{industry},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="additionalData != null">additional_data = #{additionalData},</if>
+            update_at = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateCarrier">
+        update entity_carrier
+        <set>
+            <if test="governmentId != null">government_id = #{governmentId},</if>
+            <if test="name != null">name = #{name},</if>
+            update_at = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateEnterpriseAdditionalData">
+        update entity_enterprise set additional_data = #{additionalData}
+        where id = #{id}
+    </update>
 
     <select id="getEnterpriseById" resultType="com.tuhf.project16.model.Enterprise">
         select * from entity_enterprise
         where id = #{id};
     </select>
 
-    <select id="getCarrierName" resultType="string">
-        select name carrier_name from entity_carrier
-        where id = #{carrierId};
+    <select id="getCarrierById" resultType="com.tuhf.project16.model.Carrier">
+        select * from entity_carrier ec
+        where ec.id = #{id}
     </select>
 
-    <select id="getBriefById" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
+    <select id="getGovernmentById" resultType="com.tuhf.project16.model.Government">
+        select * from entity_government
+        where id = #{id}
+    </select>
+
+    <select id="getEnterpriseNameById" resultType="java.lang.String">
+        select name from entity_enterprise
+        where id = #{id};
+    </select>
+    <select id="getCarrierNameById" resultType="java.lang.String">
+        select name from entity_carrier
+        where id = #{id};
+    </select>
+    <select id="getGovernmentNameById" resultType="java.lang.String">
+        select name from entity_government
+        where id = #{id};
+    </select>
+    <select id="getAllCarriersIdAndName" resultType="java.util.Map">
+        select id, name from entity_carrier
+    </select>
+
+    <select id="getEnterpriseBriefById" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
         select id, name, carrier_id, address, industry, status from entity_enterprise
         where id = #{id}
     </select>
 
-    <select id="getAllBriefs" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
+    <select id="getAllEnterpriseBriefs" resultType="com.tuhf.project16.payload.response.EnterpriseBriefResponse">
         select id, name, carrier_id, address, industry, status from entity_enterprise
     </select>
 
     <select id="getParentIdForCarrier" resultType="long">
-        select ec.parent_id from entity_carrier ec
+        select ec.government_id from entity_carrier ec
         where ec.id = #{carrierId}
     </select>
 
-    <select id="getCarrierById" resultType="com.tuhf.project16.model.Carrier">
-        select * from entity_carrier ec
-        where ec.id = #{id}
+    <select id="getParentIdForEnterprise" resultType="long">
+        select ee.name from entity_enterprise ee
+        where ee.id = #{enterpriseId}
     </select>
 </mapper>

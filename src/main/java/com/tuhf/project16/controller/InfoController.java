@@ -79,7 +79,7 @@ public class InfoController {
     @PreAuthorize("hasRole('enterprise')")
     @PutMapping("/etp")
     public MessageResponse setEnterpriseBasics(@RequestBody String additionalData) {
-        int flag = entityService.setEnterpriseAdditionalData(userUtil.getCrrId(), additionalData);
+        int flag = entityService.updateEnterpriseAdditionalData(userUtil.getCrrId(), additionalData);
         if (flag == 1) {
             return new MessageResponse("Success");
         } else {

@@ -15,9 +15,9 @@ public interface TransApplicationMapper {
 
     public Collection<TransOutApplication> getOutByCarrierId(long carrierId);
 
-    public TransOutApplication getInById(long id);
+    public TransInApplication getInById(long id);
 
-    public TransInApplication getOutById(long id);
+    public TransOutApplication getOutById(long id);
 
     public int setInStatus(long id, String status);
 

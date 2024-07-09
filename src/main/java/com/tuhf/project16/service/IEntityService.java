@@ -9,29 +9,43 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface IEntityService {
-    Map<String, Long> getAllCarriersNameAndId();
 
     int addEnterprise(Enterprise enterprise);
 
+    int addCarrier(Carrier carrier);
+
+    int addGovernment(Government government);
+
+
     int updateEnterprise(Enterprise enterprise);
 
-    Enterprise getEnterpriseById(long id);
+    int updateCarrier(Carrier carrier);
 
-    String getEnterpriseNameById(long id);
+    int updateEnterpriseAdditionalData(long id, String additionalData);
+
+
+    Enterprise getEnterpriseById(long id);
 
     Carrier getCarrierById(long id);
 
     Government getGovernmentById(long id);
 
-    EnterpriseBriefResponse getBriefById(long id);
-
-    Collection<EnterpriseBriefResponse> getAllBriefs();
-
-    int setEnterpriseAdditionalData(long id, String data);
+    Map<Long, String> getAllCarriersIdAndName();
 
 
-    Long getParentIdForEnterprise(long EnterpriseId);
+    String getEnterpriseNameById(long id);
+
+    String getCarrierNameById(long id);
+
+    String getGovernmentNameById(long id);
+
+
+    EnterpriseBriefResponse getEnterpriseBriefById(long id);
+
+    Collection<EnterpriseBriefResponse> getAllEnterpriseBriefs();
+
+
+    Long getParentIdForEnterprise(long enterpriseId);
+
     Long getParentIdForCarrier(long carrierId);
-
-
 }

@@ -24,4 +24,6 @@ public interface LoginUserMapper {
     /* Delete */
 
     int deleteLoginUserById(Long id);
+
+    int createBound(Long loginId, Long entityId, String entityType);
 }

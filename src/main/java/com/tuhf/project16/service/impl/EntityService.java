@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -19,13 +20,18 @@ public class EntityService implements IEntityService {
     EntityMapper entityMapper;
 
     @Override
-    public Map<String, Long> getAllCarriersNameAndId() {
-        return Map.of();
+    public int addEnterprise(Enterprise enterprise) {
+        return entityMapper.addEnterprise(enterprise);
     }
 
     @Override
-    public int addEnterprise(Enterprise enterprise) {
-        return entityMapper.addEnterprise(enterprise);
+    public int addCarrier(Carrier carrier) {
+        return entityMapper.addCarrier(carrier);
+    }
+
+    @Override
+    public int addGovernment(Government government) {
+        return entityMapper.addGovernment(government);
     }
 
     @Override
@@ -34,13 +40,18 @@ public class EntityService implements IEntityService {
     }
 
     @Override
-    public Enterprise getEnterpriseById(long id) {
-        return entityMapper.getEnterpriseById(id);
+    public int updateCarrier(Carrier carrier) {
+        return entityMapper.updateCarrier(carrier);
     }
 
     @Override
-    public String getEnterpriseNameById(long id) {
-        return getEnterpriseById(id).getName();
+    public int updateEnterpriseAdditionalData(long id, String additionalData) {
+        return entityMapper.updateEnterpriseAdditionalData(id, additionalData);
+    }
+
+    @Override
+    public Enterprise getEnterpriseById(long id) {
+        return entityMapper.getEnterpriseById(id);
     }
 
     @Override
@@ -50,29 +61,43 @@ public class EntityService implements IEntityService {
 
     @Override
     public Government getGovernmentById(long id) {
-        return null;
+        return entityMapper.getGovernmentById(id);
     }
 
     @Override
-    public EnterpriseBriefResponse getBriefById(long id) {
-        return entityMapper.getBriefById(id);
+    public Map<Long, String> getAllCarriersIdAndName() {
+        return entityMapper.getAllCarriersIdAndName();
     }
 
     @Override
-    public Collection<EnterpriseBriefResponse> getAllBriefs() {
-        return entityMapper.getAllBriefs();
+    public String getEnterpriseNameById(long id) {
+        return entityMapper.getEnterpriseNameById(id);
     }
 
     @Override
-    public int setEnterpriseAdditionalData(long id, String data) {
-        return 0;
+    public String getCarrierNameById(long id) {
+        return entityMapper.getCarrierNameById(id);
+    }
+
+    @Override
+    public String getGovernmentNameById(long id) {
+        return entityMapper.getGovernmentNameById(id);
+    }
+
+    @Override
+    public EnterpriseBriefResponse getEnterpriseBriefById(long id) {
+        return entityMapper.getEnterpriseBriefById(id);
+    }
+
+    @Override
+    public Collection<EnterpriseBriefResponse> getAllEnterpriseBriefs() {
+        return entityMapper.getAllEnterpriseBriefs();
     }
 
     @Override
     public Long getParentIdForEnterprise(long EnterpriseId) {
-        return 0L;
+        return entityMapper.getParentIdForEnterprise(EnterpriseId);
     }
-
 
     @Override
     public Long getParentIdForCarrier(long carrierId) {

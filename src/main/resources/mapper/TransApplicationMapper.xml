@@ -6,7 +6,7 @@
     <insert id="addIn" parameterType="com.tuhf.project16.model.TransInApplication">
         insert into trans_in_application(
             name, carrier_id, credit_code, registered_capital, address, business, type, register_at, certification,
-            additional_data, status, create_at
+            additional_data, status, create_at, user_id
         ) value (
             #{name},
             #{carrierId},
@@ -19,7 +19,8 @@
             #{certification},
             #{additionalData},
             #{status},
-            #{createAt}
+            #{createAt},
+            #{userId}
         )
     </insert>
 
@@ -57,11 +58,11 @@
         select * from trans_in_application
         where carrier_id = #{carrierId}
     </select>
-    <select id="getInById" resultType="com.tuhf.project16.model.TransOutApplication">
+    <select id="getInById" resultType="com.tuhf.project16.model.TransInApplication">
         select * from trans_in_application
         where id = #{id}
     </select>
-    <select id="getOutById" resultType="com.tuhf.project16.model.TransInApplication">
+    <select id="getOutById" resultType="com.tuhf.project16.model.TransOutApplication">
         select * from trans_out_application
         where id = #{id}
     </select>

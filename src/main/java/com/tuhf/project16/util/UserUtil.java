@@ -26,4 +26,9 @@ public class UserUtil {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return loginUserService.getEntityIdByUsername(username);
     }
+
+    public Long getUserId() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loginUserService.getIdByUsername(username);
+    }
 }

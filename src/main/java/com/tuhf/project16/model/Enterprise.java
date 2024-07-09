@@ -71,20 +71,20 @@ public class Enterprise {
     private String status;
 
     /* 正常1 预入驻2 预搬离3 信息载体4 删除 0 */
-    private int sysStatus;
+//    private int sysStatus;
 
-    public Enterprise(TransInRequest request) {
-        this.carrierId = request.carrierId();
-        this.name = request.name();
-        this.creditCode = request.creditCode();
-        this.registeredCapital = request.registeredCapital();
-        this.address = request.address();
-        this.business = request.business();
-        this.type = request.type();
-        this.registerAt = request.registerAt();
-        this.additionalData = request.additionalData();
+    public Enterprise(TransInApplication application) {
+        this.carrierId = application.getCarrierId();
+        this.name = application.getName();
+        this.creditCode = application.getCreditCode();
+        this.registeredCapital = application.getRegisteredCapital();
+        this.address = application.getAddress();
+        this.business = application.getBusiness();
+        this.type = application.getType();
+        this.registerAt = application.getRegisterAt();
+        this.additionalData = application.getAdditionalData();
         this.status = "预设状态";
 
-        this.sysStatus = PRE_IN;
+//        this.sysStatus = PRE_IN;
     }
 }

@@ -7,6 +7,8 @@ public interface ILoginUserService {
 
     int addLoginUser(LoginUser loginUser);
 
+    int createBound(long loginId, long entityId, String entityType);
+
     /* Request */
 
     LoginUser getLoginUserById(Long id);
@@ -31,5 +33,4 @@ public interface ILoginUserService {
 
     int deleteLoginUserById(Long id);
 
-    int createBound(long loginUserId, long entityId);
 }

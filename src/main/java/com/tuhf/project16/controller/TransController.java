@@ -45,12 +45,15 @@ public class TransController {
     /* 可用载体列表 */
     @GetMapping("/in")
     public TransInVO transInVO() {
-        return new TransInVO(entityService.getAllCarriersNameAndId());
+        return new TransInVO(entityService.getAllCarriersIdAndName());
     }
 
     /* 提交入驻申请 */
     @PostMapping("/in")
     public MessageResponse transIn(@RequestBody TransInRequest request) {
+        TransInApplication application = new TransInApplication(request);
+        application.setUserId(userUtil.getUserId());
+
         transApplicationService.addTransInApplication(
                 new TransInApplication(request)
         );
@@ -142,12 +145,18 @@ public class TransController {
     @PutMapping("/review/in/accept/{id}")
     public MessageResponse acceptIn(@PathVariable long id) {
 
+        TransInApplication application = transApplicationService.getInById(id);
         // 验证是否为本载体所属
-        if (!Objects.equals(transApplicationService.getInById(userUtil.getCrrId()).getCarrierId(), userUtil.getCrrId())) {
+        if (!Objects.equals(application.getCarrierId(), userUtil.getCrrId())) {
             return new MessageResponse("没有权限");
         }
 
         transApplicationService.setInStatus(id, "已完成");
+
+        // 创建实体和连接
+        Enterprise enterprise = new Enterprise(application);
+        entityService.addEnterprise(enterprise);
+        loginUserService.createBound(application.getUserId(), enterprise.getId(), "etp");
         return new MessageResponse("操作成功");
     }
 

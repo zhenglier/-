@@ -37,12 +37,12 @@ public class TransApplicationService implements ITransApplicationService {
     }
 
     @Override
-    public TransOutApplication getInById(long id) {
+    public TransInApplication getInById(long id) {
         return transApplicationMapper.getInById(id);
     }
 
     @Override
-    public TransInApplication getOutById(long id) {
+    public TransOutApplication getOutById(long id) {
         return transApplicationMapper.getOutById(id);
     }
 

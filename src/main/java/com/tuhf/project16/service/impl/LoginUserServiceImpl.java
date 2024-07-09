@@ -63,7 +63,7 @@ public class LoginUserServiceImpl implements ILoginUserService {
     }
 
     @Override
-    public int createBound(long loginUserId, long entityId) {
-        return 0;
+    public int createBound(long loginId, long entityId, String entityType) {
+        return loginUserMapper.createBound(loginId, entityId, entityType);
     }
 }

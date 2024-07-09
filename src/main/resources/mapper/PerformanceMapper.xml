@@ -88,7 +88,7 @@
             select id from pf_application
             where carrier_id in (
                 select id from entity_carrier
-                where parent_id = #{govId}
+                where government_id = #{govId}
             )
         )
     </select>
