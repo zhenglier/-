@@ -6,7 +6,6 @@ import com.tuhf.project16.model.LoginUser;
 import com.tuhf.project16.payload.request.LoginRequest;
 import com.tuhf.project16.payload.request.LogoutRequest;
 import com.tuhf.project16.payload.request.RegisterRequest;
-import com.tuhf.project16.payload.request.VerifyCaptchaRequest;
 import com.tuhf.project16.payload.response.LoginResponse;
 import com.tuhf.project16.payload.response.LogoutResponse;
 import com.tuhf.project16.payload.response.MessageResponse;
@@ -86,6 +85,19 @@ public class AuthController {
      */
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        // 验证码验证
+        String code = (String) redisTemplate.opsForValue().get(loginRequest.uuid());
+        if (code == null) {
+            return new LoginResponse(null, null, null, 20001);
+        } else {
+            redisTemplate.opsForValue().getAndDelete(loginRequest.uuid());
+        }
+
+        if (!code.equals(loginRequest.code())) {
+            return new LoginResponse(null, null, null, 20002);
+        }
+
+
         // SS验证
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -103,7 +115,8 @@ public class AuthController {
         return new LoginResponse(
                         token,
                         userDetails.getUsername(),
-                        role
+                        role,
+                        20000
         );
     }
 
@@ -132,15 +145,6 @@ public class AuthController {
         return new MessageResponse("Successfully registered!");
     }
 
-    /*
-    @GetMapping("/captcha")
-    public CaptchaVO getCaptcha() {
-        GifCaptcha captcha =  CaptchaUtil.createGifCaptcha(200, 50, 4);
-        String uuid = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(uuid, captcha.getCode(), 20, TimeUnit.MINUTES);
-        return new CaptchaVO(uuid, captcha.getImageBytes());
-    }
-    */
     @GetMapping("/captcha/{uuid}")
     public ResponseEntity<Resource> getCaptcha(@PathVariable String uuid) {
         GifCaptcha captcha =  CaptchaUtil.createGifCaptcha(200, 50, 4);
@@ -150,19 +154,4 @@ public class AuthController {
                 .body(new ByteArrayResource(captcha.getImageBytes()));
     }
 
-    @PostMapping("/captcha")
-    public String verifyCaptcha(@RequestBody VerifyCaptchaRequest request) {
-        String code = (String) redisTemplate.opsForValue().get(request.uuid());
-        if (code == null) {
-            return "expired";
-        } else {
-            redisTemplate.opsForValue().getAndDelete(request.uuid());
-        }
-
-        if (code.equals(request.code())) {
-            return "true";
-        } else {
-            return "false";
-        }
-    }
 }
