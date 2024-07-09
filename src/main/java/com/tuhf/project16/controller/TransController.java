@@ -63,8 +63,7 @@ public class TransController {
     /* 搬离申请页面信息 */
     @GetMapping("/out")
     public TransOutVO transOutVO() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Enterprise enterprise = entityService.getEnterpriseById(loginUserService.getEntityIdByUsername(username));
+        Enterprise enterprise = entityService.getEnterpriseById(userUtil.getEtpId());
         return new TransOutVO(
                 enterprise.getName(),
                 entityService.getCarrierById(enterprise.getCarrierId()).getName(),

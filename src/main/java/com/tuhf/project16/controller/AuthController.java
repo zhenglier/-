@@ -1,5 +1,8 @@
 package com.tuhf.project16.controller;
 
+import cn.hutool.Hutool;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.GifCaptcha;
 import com.tuhf.project16.model.LoginUser;
 import com.tuhf.project16.payload.request.LoginRequest;
 import com.tuhf.project16.payload.request.LogoutRequest;
@@ -7,12 +10,16 @@ import com.tuhf.project16.payload.request.RegisterRequest;
 import com.tuhf.project16.payload.response.LoginResponse;
 import com.tuhf.project16.payload.response.LogoutResponse;
 import com.tuhf.project16.payload.response.MessageResponse;
+import com.tuhf.project16.payload.vo.CaptchaVO;
 import com.tuhf.project16.service.ILoginUserService;
 import com.tuhf.project16.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +30,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -40,6 +50,9 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    @Qualifier("redisTemplate")
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 检查 token 的有效性
@@ -124,4 +137,11 @@ public class AuthController {
         return new MessageResponse("Successfully registered!");
     }
 
+    @GetMapping("/captcha")
+    public CaptchaVO getCaptcha() {
+        GifCaptcha captcha =  CaptchaUtil.createGifCaptcha(200, 50, 4);
+        String uuid = UUID.randomUUID().toString();
+        redisTemplate.opsForValue().set(uuid, captcha.getCode(), 20, TimeUnit.MINUTES);
+        return new CaptchaVO(uuid, captcha.getImageBytes());
+    }
 }
