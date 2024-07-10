@@ -45,9 +45,9 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
-    @Qualifier("redisTemplate")
+
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 检查 token 的有效性
@@ -83,18 +83,47 @@ public class AuthController {
      * @param loginRequest 包含前端输入的用户名和密码
      * @return LoginResponse 对象，包含令牌、用户名、角色、状态码
      */
+    @PostMapping("/loginfortest")
+    public LoginResponse loginfortest(@RequestBody LoginRequest loginRequest) {
+        // SS验证
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.username(),
+                        loginRequest.password()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // 如果通过了ss验证，发放token
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String role = userDetails.getAuthorities().iterator().next().getAuthority();
+        String token = jwtUtil.create(authentication);
+
+        return new LoginResponse(
+                token,
+                userDetails.getUsername(),
+                role,
+                20000
+        );
+    }
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         // 验证码验证
-        String code = (String) redisTemplate.opsForValue().get(loginRequest.uuid());
-        if (code == null) {
+        // 20001: 验证码为空
+        // 20002: 会话过期
+        // 20003: 验证码不正确
+
+        if (loginRequest.captcha() == null) {
             return new LoginResponse(null, null, null, 20001);
-        } else {
-            redisTemplate.opsForValue().getAndDelete(loginRequest.uuid());
         }
 
-        if (!code.equals(loginRequest.code())) {
+        String code = (String) redisTemplate.opsForValue().get(loginRequest.uuid());
+        if (code == null) {
             return new LoginResponse(null, null, null, 20002);
+        }
+
+        if (!code.equals(loginRequest.captcha())) {
+            return new LoginResponse(null, null, null, 20003);
         }
 
 
