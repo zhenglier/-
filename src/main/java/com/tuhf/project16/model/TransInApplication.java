@@ -57,6 +57,6 @@ public class TransInApplication {
         this.registerAt = request.registerAt();
         this.certification = request.certification();
         this.additionalData = request.additionalData();
-        this.status = "待审核";
+        this.status = "待审批";
     }
 }

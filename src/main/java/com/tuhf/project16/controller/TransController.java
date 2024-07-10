@@ -40,9 +40,11 @@ public class TransController {
     UserUtil userUtil;
 
     /* 可用载体列表 */
-    @GetMapping("/in")
-    public Map<?, ?> transInVO() {
-        return entityService.getAllCarriersIdAndName();
+    @GetMapping("/ins")
+    public Map<?,?> transInVO() {
+        TransInVO transInVO= new TransInVO(entityService.getAllCarriersIdAndName());
+        System.out.println(transInVO);
+        return transInVO.carrierList();
     }
 
     /* 提交入驻申请 */
@@ -51,9 +53,7 @@ public class TransController {
         TransInApplication application = new TransInApplication(request);
         application.setUserId(userUtil.getUserId());
 
-        transApplicationService.addTransInApplication(
-                new TransInApplication(request)
-        );
+        transApplicationService.addTransInApplication(application);
         return new MessageResponse("Success");
     }
 
