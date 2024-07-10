@@ -19,10 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/trans")
@@ -44,8 +41,8 @@ public class TransController {
 
     /* 可用载体列表 */
     @GetMapping("/in")
-    public TransInVO transInVO() {
-        return new TransInVO(entityService.getAllCarriersIdAndName());
+    public Map<?, ?> transInVO() {
+        return entityService.getAllCarriersIdAndName();
     }
 
     /* 提交入驻申请 */
